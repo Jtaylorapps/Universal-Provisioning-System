@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="panel panel-primary">
+        <!-- Panel Header -->
+        <div class=panel-heading>
+            {% block panel_heading %}{% endblock %}
+        </div>
+        <!-- Panel Body -->
+        <div class=panel-body>
+            {% block panel_body %}{% endblock %}
+        </div>
+                <!-- Search results table -->
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <!-- Create table header -->
+                    <thead>
+                    <tr>
+                        {% for header in headers %}
+                            <th>{{ header }}</th>
+                        {% endfor %}
+                    </tr>
+                    </thead>
+                    <!-- Populate the table with data -->
+                    <tbody>
+                    {% block table_body %}{% endblock %}
+                    </tbody>
+                </table>
+            </div>
+    </div>
+    <!-- Pagination -->
+    <nav>
+        <ul class="pager">
+            {% if data.has_prev %}
+                <li class="previous">
+                    <a href="{{ url_for('browse', type=type, page_num=data.prev_num) }}">
+                        <span aria-hidden="true">&larr;</span> Previous</a>
+                </li>
+            {% endif %}
+            {% if data.has_next %}
+                <li class="next">
+                    <a href="{{ url_for('browse', type=type, page_num=data.next_num) }}">
+                        Next <span aria-hidden="true">&rarr;</span></a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endblock %}

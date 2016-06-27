@@ -1,0 +1,12 @@
+{% extends "browse.html" %}
+{% block panel_heading %}Roles Assigned to {{ user.name }} ({{ user.id }}){% endblock %}
+{% block table_body %}
+    {% for row in data %}
+        <tr>
+            <td class="col-md-4">
+                <a href="{{ url_for('role_page', role_id=row.id) }}">{{ row.requested_role.name }}</a>
+            </td>
+            <td>{{ row.requested_role.desc }}</td>
+        </tr>
+    {% endfor %}
+{% endblock %}

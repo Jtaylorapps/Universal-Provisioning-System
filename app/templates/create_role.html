@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block content %}
+    <!-- Search Form -->
+    <form name="create_role" method=POST class="form-horizontal" role="form">
+        <!-- Form submission tag -->
+        {{ form.hidden_tag() }}
+        <div class="panel panel-primary">
+            <!-- Panel Header -->
+            <div class="panel-heading">
+                Create UPS Role
+            </div>
+            <!-- Panel Body -->
+            <div class="panel-body">
+                <!-- Role Name text field -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label">{{ form.name.label }}</label>
+                    <div class="col-md-8">{{ form.name(class_="form-control", autofocus=true, required=true) }}</div>
+                </div>
+                <!-- Role Description text area -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label">{{ form.desc.label }}</label>
+                    <div class="col-md-8 ">{{ form.desc(class_="form-control") }}</div>
+                </div>
+                <!-- Role Type drop down -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label">{{ form.type.label }}</label>
+                    <div class="col-md-8">{{ form.type(class_="form-control", required=true) }}</div>
+                </div>
+                <!-- Add Approvers drop down -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label">{{ form.approvers.label }}</label>
+                    <div class="col-md-8">{{ form.approvers(class_="form-control js-user-dropdown-ajax") }}</div>
+                </div>
+                <!-- Add Parent drop down -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label">{{ form.parents.label }}</label>
+                    <div class="col-md-8">{{ form.parents(class_="form-control js-role-dropdown-ajax") }}</div>
+                </div>
+                <!-- Add Children drop down -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label">{{ form.children.label }}</label>
+                    <div class="col-md-8">{{ form.children(class_="form-control js-role-dropdown-ajax") }}</div>
+                </div>
+                {% if form.submit.errors %}
+                    <!-- Invalid role name alert -->
+                    <div class="alert alert-danger col-md-offset-2 col-md-8" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        {% for error in form.submit.errors %}
+                            <strong>Error!</strong> {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <!-- Submit button -->
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-8">{{ form.submit(class_="form-control btn-primary") }}</div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- Script for AJAX select fields -->
+    <script type="text/javascript">
+        $('.js-user-dropdown-ajax').select2({
+            ajax: {
+                url: '/finduser/',
+                dataType: 'json',
+                type: 'GET',
+                delay: 250,
+                // Pass the search query to the GET URL
+                data: function (params) {
+                    return {
+                        user: params.term
+                    };
+                },
+                // Process the response into result rows
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                }
+            },
+            // Set the input length required to search
+            minimumInputLength: 3
+        });
+        $('.js-role-dropdown-ajax').select2({
+            ajax: {
+                url: '/findrole/',
+                dataType: 'json',
+                type: 'GET',
+                delay: 250,
+                // Pass the search query to the GET URL
+                data: function (params) {
+                    return {
+                        role: params.term
+                    };
+                },
+                // Process the response into result rows
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                }
+            },
+            // Set the input length required to search
+            minimumInputLength: 3
+        });
+    </script>
+{% endblock %}
+{#                success: function (response) {#}
+{#                    console.log(response);#}
+{#                    // Obtain the div that the dropdown will be in#}
+{#                    var dropdown_div = $('#DRP_Owner').addClass('col-md-offset-2 col-md-8')#}
+{#                    // Create the table to insert#}
+{#                    var dropdown = $('<select></select>').addClass('form-control');#}
+{#                    // Empty the existing div and add the new dropdown#}
+{#                    dropdown_div.empty().append(dropdown);#}
+{#                    // For each of our results, append a row to the select list#}
+{#                    $.each(response.results, function (i, result) {#}
+{#                        dropdown.append#}
+{#                        ('<option>' + result[1] + ' (' + result[0] + ')</option>');#}
+{#                    });#}

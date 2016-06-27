@@ -1,0 +1,50 @@
+from app.models import *
+from app import db
+
+# Delete existing data ----------------
+with db.session.no_autoflush:
+    for user in User.query.all():
+        db.session.delete(user)
+
+    for role in Role.query.all():
+        db.session.delete(role)
+
+    for request in Request.query.all():
+        db.session.delete(request)
+
+    # Commit changes
+    db.session.commit()
+
+    # Create some new testing data -------
+    user1 = User(604048, "Shawn McCarthy")
+    user2 = User(604049, "Steve Vingerhoet", 604048)
+    db.session.add_all([user1, user2,
+                        User(604050, "Jacob Taylor", 604049),
+                        User(604051, "Regan Yee", 604049),
+                        User(604052, "Random Guy", 604048, "tester", False),
+                        User(604053, "Some Intern", 604051)])
+    role1 = Role("UPS User", "UPS Access", 604048, "FUNCTIONAL")
+    role2 = Role("UPS Role Create", "UPS Role Creation Access", 604048, "FUNCTIONAL")
+    role3 = Role("UPS Maintenance", "UPS Admin Read Access", 604048, "FUNCTIONAL")
+    role4 = Role("UPS Admin", "UPS Admin Access", 604048, "FUNCTIONAL")
+    role5 = Role("My Role 1", "Child UPS Role", 604049, "APPLICATION")
+    role6 = Role("My Role 2", "Child UPS Admin Role", 604049, "APPLICATION")
+    db.session.add_all([role1, role2, role3, role4, role5, role6,
+                        Role("Test Role 1", "Where am I", 604050, "FUNCTIONAL"),
+                        Role("Test Role 2", "Whats happening", 604050, "PERMISSION"),
+                        Role("Test Role 3", "Test", 604050, "APPLICATION"),
+                        Role("Test Role 4", "Test", 604050, "PERMISSION"),
+                        Role("Test Role 5", "Testing123", 604050, "APPLICATION")])
+    db.session.add_all([Request(4, 604048, 604048, "TestComment", "IMPLEMENTED"),
+                        Request(3, 604049, 604048, "TestComment", "APPROVED"),
+                        Request(2, 604050, 604049, "TestComment", "PENDING"),
+                        Request(3, 604051, 604050, "TestComment", "REJECTED")])
+    # Commit changes
+    db.session.commit()
+    role1.add_approvers([user1, user2])
+    db.session.commit()
+
+# Prove that changes were made
+print("Users: " + str(User.query.all()))
+print("Roles: " + str(Role.query.all()))
+print("Requests: " + str(Request.query.all()))

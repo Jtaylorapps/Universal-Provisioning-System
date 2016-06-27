@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block content %}
+    <!-- Search Form -->
+    <form name="assign_access" method=POST class="form-horizontal" role="form">
+        <!-- Form submission tag -->
+        {{ form.hidden_tag() }}
+        <div class="panel panel-primary">
+            <!-- Panel Header -->
+            <div class="panel-heading">
+                Assign Access
+            </div>
+            <!-- Panel Body -->
+            <div class="panel-body">
+                <!-- User select field -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label">{{ form.users.label }}</label>
+                    <div class="col-md-8">{{ form.users(class_="form-control js-dropdown-ajax", required=true) }}</div>
+                </div>
+                <!-- Role select field -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label">{{ form.roles.label }}</label>
+                    <div class="col-md-8">{{ form.roles(class_="form-control js-dropdown-ajax", required=true) }}</div>
+                </div>
+                <!-- Comment text area -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label">{{ form.comment.label }}</label>
+                    <div class="col-md-8 ">{{ form.comment(class_="form-control") }}</div>
+                </div>
+                <!-- Submit button -->
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-8">{{ form.submit(class_="form-control btn-primary") }}</div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- Script for finding user to select as Owner -->
+    <script type="text/javascript">
+        $('#DRP_User').select2({
+            multiple: true,
+            ajax: {
+                url: '/finduser/',
+                dataType: 'json',
+                type: 'GET',
+                delay: 250,
+                // Pass the search query to the GET URL
+                data: function (params) {
+                    return {
+                        user: params.term
+                    };
+                },
+                // Process the response into result rows
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                }
+            },
+            // Set the input length required to search
+            minimumInputLength: 3
+        });
+        $('#DRP_Role').select2({
+            multiple: true,
+            ajax: {
+                url: '/findrole/',
+                dataType: 'json',
+                type: 'GET',
+                delay: 250,
+                // Pass the search query to the GET URL
+                data: function (params) {
+                    return {
+                        role: params.term
+                    };
+                },
+                // Process the response into result rows
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                }
+            },
+            // Set the input length required to search
+            minimumInputLength: 3
+        });
+    </script>
+{% endblock %}

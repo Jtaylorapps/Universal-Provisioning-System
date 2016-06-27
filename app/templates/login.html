@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="UPS">
+    <meta name="author" content="SSGA">
+
+    <!-- Title and favicons -->
+    <title>UPS - Sign In</title>
+    <link rel="icon" type="image/png" href="../static/img/favicon-32x32.png" sizes="32x32"/>
+    <link rel="icon" type="image/png" href="../static/img/favicon-16x16.png" sizes="16x16"/>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../static/css/login.css" rel="stylesheet"> <!-- Login stylesheet -->
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet"> <!-- Bootstrap stylesheet -->
+    <link href="../static/css/ie10-viewport-bug-workaround.css" rel="stylesheet"> <!-- IE10 for Windows 8 bug -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="../static/js/bootstrap.min.js"></script> <!-- Bootstrap scripts -->
+    <script src="../static/js/html5shiv.min.js"></script> <!-- IE6-8 compatibility -->
+    <script src="../static/js/respond.min.js"></script> <!-- IE6-8 compatibility -->
+    <script src="../static/js/ie10-viewport-bug-workaround.js"></script> <!-- IE10 for Windows 8 bug -->
+</head>
+
+<!-- Body ================================================================== -->
+<body>
+
+<!-- Login form -->
+<div class="container">
+    <form name="login" class="form-signin" method=POST>
+        <!-- Form submission tag -->
+        {{ form.hidden_tag() }}
+        <h2 class="form-signin-heading">UPS Login</h2>
+        {{ form.username(maxlength=6, class_="form-control", placeholder="Employee ID", autofocus=true, required=true) }}
+        {{ form.password(maxlength=32, class_="form-control", placeholder="Password", required=true) }}
+        <!-- Show any log-in related errors -->
+        {% if form.submit.errors %}
+            <div class="alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                {% for error in form.submit.errors %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <!-- Remember me checkbox -->
+        <div class="checkbox">
+            <label>
+                {{ form.remember_me }} Remember Me
+            </label>
+        </div>
+        {{ form.submit(class_="btn btn-lg btn-primary btn-block") }}
+    </form>
+</div>
+
+</body>
+</html>

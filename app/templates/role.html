@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="jumbotron">
+        <h1>Role
+            <small>{{ role.name }}</small>
+        </h1>
+        <h3>Owner:
+            {{ role.owner.name }}
+            (<a href="{{ url_for('user_page', user_id=role.owner.id) }}">{{ role.owner.id }})</a>
+        </h3>
+        <hr>
+        <!-- Role Description well -->
+        <h4>Description</h4>
+        <div class="well well-sm">
+            {{ role.desc }}
+        </div>
+        <!-- Role Approvers well -->
+        <h4>Approvers</h4>
+        <div class="well well-sm">
+            {% for row in role.approvers %}{{ row.name }}<br>{% endfor %}
+        </div>
+        <!-- Parent Roles table -->
+        <div class="panel panel-primary">
+            <!-- Panel Header -->
+            <div class=panel-heading>
+                Parent Roles
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <!-- Create table header -->
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                    </tr>
+                    </thead>
+                    <!-- Populate the table with data -->
+                    <tbody>
+                    {% for row in role.parents %}
+                        <tr>
+                            <td class="col-md-4">
+                                <a href="{{ url_for('role_page', role_id=row.id) }}">{{ row.name }}</a>
+                            </td>
+                            <td>{{ row.desc }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Child Roles table -->
+        <div class="panel panel-primary">
+            <!-- Panel Header -->
+            <div class=panel-heading>
+                Child Roles
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <!-- Create table header -->
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                    </tr>
+                    </thead>
+                    <!-- Populate the table with data -->
+                    <tbody>
+                    {% for row in role.children %}
+                        <tr>
+                            <td class="col-md-4">
+                                <a href="{{ url_for('role_page', role_id=row.id) }}">{{ row.name }}</a>
+                            </td>
+                            <td>{{ row.desc }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

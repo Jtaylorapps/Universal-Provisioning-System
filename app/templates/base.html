@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Header ================================================================= -->
+<head>
+    <!-- Meta information -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="UPS">
+    <meta name="author" content="SSGA">
+
+
+    <!-- Title and favicons -->
+    <title>User Provisioning System</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon-32x32.png') }}" sizes="32x32"/>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon-16x16.png') }}" sizes="16x16"/>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename='css/base.css') }}" rel="stylesheet"> <!-- Base stylesheet -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet"> <!-- Bootstrap stylesheet -->
+    <link href="{{ url_for('static', filename='css/select2.min.css') }}" rel="stylesheet"> <!-- Select2 stylesheet -->
+    <link href="{{ url_for('static', filename='css/ie10-viewport-bug-workaround.css') }}" rel="stylesheet"> <!-- IE10 for Windows 8 bug -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="{{ url_for('static', filename='js/jquery-1.12.0.min.js') }}"></script> <!-- Jquery scripts -->
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script> <!-- Bootstrap scripts -->
+    <script src="{{ url_for('static', filename='js/select2.full.min.js') }}"></script> <!-- Select2 scripts -->
+    <script src="{{ url_for('static', filename='js/html5shiv.min.js') }}"></script> <!-- IE6-8 compatibility -->
+    <script src="{{ url_for('static', filename='js/respond.min.js') }}"></script> <!-- IE6-8 compatibility -->
+    <script src="{{ url_for('static', filename='js/ie10-viewport-bug-workaround.js') }}"></script> <!-- IE10 for Windows 8 bug -->
+</head>
+
+<!-- Body ================================================================== -->
+<body>
+
+<!-- Navbar  -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Navbar title and header -->
+        <div class="navbar-header">
+            <!-- Collapsing for mobile devices and small screens  -->
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#navbar" aria-expanded="false">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!-- Navbar header -->
+            <a class="navbar-brand" href="{{ url_for('index') }}">
+                <span class="glyphicon glyphicon-home"></span> User Provisioning System</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <!-- Left aligned portion of the navbar -->
+            <ul class="nav navbar-nav">
+                <!-- My Profile dropdown -->
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                       aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> Profile</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">My Tasklist</a></li>
+                        <li><a href="{{ url_for('user_page', user_id=g.user.id, subpage='requests') }}">My Role Requests</a></li>
+                        <li><a href="{{ url_for('user_page', user_id=g.user.id, subpage='roles') }}">My Active Roles</a></li>
+                        <li><a href="#">Proxy Users</a></li>
+                    </ul>
+                </li>
+                <!-- Search dropdown -->
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false"><span class="glyphicon glyphicon-search"></span> Search</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('browse', type='users') }}">Users</a></li>
+                        <li><a href="{{ url_for('browse', type='roles') }}">Roles</a></li>
+                        <li><a href="{{ url_for('browse', type='requests') }}">Requests</a></li>
+                    </ul>
+                </li>
+                <!-- Access control button -->
+                <li><a href="{{ url_for('assign') }}"><span class="glyphicon glyphicon-th-list"></span> Assign</a></li>
+                <!-- RoleCreate dropdown -->
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                       aria-haspopup="true" aria-expanded="false">Role Actions <span
+                            class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('create_role') }}">Create Role</a></li>
+                        <li><a href="#">Edit Role</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- Right aligned portion of the navbar -->
+            <ul class="nav navbar-nav navbar-right">
+                <!-- Help page -->
+                <li><a href="#"><span class="glyphicon glyphicon-question-sign"></span> Help</a></li>
+                <!-- Log out -->
+                <li><a href="{{ url_for('logout') }}">Log Out <span class="glyphicon glyphicon-log-in"></span></a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Page content -->
+<div class="container">
+
+    <!-- Individual page content inheriting from the base is displayed here -->
+    {% block content %}{% endblock %}
+
+    <!-- FOOTER -->
+    <footer>
+        <p class="pull-right">Signed in as
+            <!-- Link to the logged in user page -->
+            {{ g.user.name }} (<a href="{{ url_for('user_page', user_id=g.user.id) }}">{{ g.user.id }}</a>)
+        </p>
+        <p>&copy; 2016 State Street Global Advisors</p>
+    </footer>
+</div>
+
+</body>
+</html>

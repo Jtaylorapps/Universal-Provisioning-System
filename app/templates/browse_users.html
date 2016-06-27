@@ -1,0 +1,34 @@
+{% extends "browse.html" %}
+{% block panel_heading %}Search UPS Users{% endblock %}
+{% block panel_body %}
+    <!-- Search Form -->
+    <form name="search" method=POST class="form-horizontal" role="search">
+        <!-- Form submission tag -->
+        {{ form.hidden_tag() }}
+        <div style="display: inline-block;">
+            <div class="col-lg-4">
+                <div class="input-group">
+                    <!-- Search text box -->
+                    {{ form.query(maxlength=120, class_="form-control", placeholder="Enter Search Query", autofocus=true, required=true) }}
+                    <!-- Submit button -->
+                    <div class="input-group-btn">
+                        {{ form.submit(class_="btn btn-primary") }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+{% block table_body %}
+    {% for row in data.items %}
+        <tr>
+            <td class="col-md-1"><a href="{{ url_for('user_page', user_id=row.id) }}">{{ row.id }}</a></td>
+            <td class="col-md-3">{{ row.name }}</td>
+            <td>{% if row.manager is not none %}
+                {{ row.manager.name }}
+                (<a href="{{ url_for('user_page', user_id=row.manager.id) }}">{{ row.manager.id }}</a>)
+            {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+{% endblock %}

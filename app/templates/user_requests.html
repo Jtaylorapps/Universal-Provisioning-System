@@ -1,0 +1,17 @@
+{% extends "browse.html" %}
+{% block panel_heading %}Role Requests by {{ user.name }} ({{ user.id }}){% endblock %}
+{% block panel_body %}
+{% endblock %}
+{% block table_body %}
+    {% for row in data %}
+        <tr>
+            <td class="col-md-1">{{ row.status }}</td>
+            <td class="col-md-3"><a
+                    href="{{ url_for('role_page', role_id=row.role_id) }}">{{ row.requested_role.name }}</a></td>
+            <td class="col-md-3">{{ row.requested_for.name }}
+                (<a href="{{ url_for('user_page', user_id=row.requested_for_id) }}">{{ row.requested_for.id }}</a>)
+            </td>
+            <td>{{ row.comment }}</td>
+        </tr>
+    {% endfor %}
+{% endblock %}

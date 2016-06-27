@@ -1,0 +1,37 @@
+{% extends "browse.html" %}
+{% block panel_heading %}Search UPS Requests{% endblock %}
+{% block panel_body %}
+    <!-- Search Form -->
+    <form name="search" method=POST class="form-horizontal" role="search">
+        <!-- Form submission tag -->
+        {{ form.hidden_tag() }}
+        <div style="display: inline-block;">
+            <div class="col-lg-4">
+                <div class="input-group">
+                    <!-- Search text box -->
+                    {{ form.query(maxlength=120, class_="form-control", placeholder="Enter Search Query", autofocus=true, required=true) }}
+                    <!-- Submit button -->
+                    <div class="input-group-btn">
+                        {{ form.submit(class_="btn btn-primary") }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+{% block table_body %}
+    {% for row in data.items %}
+        <tr>
+            <td class="col-md-1">{{ row.status }}</td>
+            <td class="col-md-3"><a
+                    href="{{ url_for('role_page', role_id=row.role_id) }}">{{ row.requested_role.name }}</a></td>
+            <td class="col-md-3">{{ row.requested_for.name }}
+                (<a href="{{ url_for('user_page', user_id=row.requested_for_id) }}">{{ row.requested_for.id }}</a>)
+            </td>
+            <td class="col-md-3">{{ row.requested_by.name }}
+                (<a href="{{ url_for('user_page', user_id=row.requested_by_id) }}">{{ row.requested_by.id }}</a>)
+            </td>
+            <td>{{ row.comment }}</td>
+        </tr>
+    {% endfor %}
+{% endblock %}
