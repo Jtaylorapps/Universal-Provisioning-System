@@ -1,8 +1,8 @@
-# Universal-Provisioning-System ---
+# Universal-Provisioning-System
 Python/Flask project designed to manage access of users to specific roles. 
 Each request must go through an approval process involving managers and role approvers.
 This is a work-in-progress and not all functionality is complete, however many of the core functionalities are completely finished.
-# ----------------------------------
+# ------------------------------
 Illustrates a firm grasp of the following technologies and concepts:
 - Python/Flask
 - Web Design (Bootstrap)
