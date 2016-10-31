@@ -80,17 +80,11 @@ class Role(db.Model):
     id = Column(Integer, primary_key=True)
     name = Column(String(255), index=True, unique=True, nullable=False)
     desc = Column(String(255))
-    type = Column(Enum("APPLICATION", "FUNCTIONAL", "PERMISSION"), nullable=False, default="PERMISSION")
-    owner_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-
-    # TODO: How to represent an App role's App
 
     # Method for creating new Role objects
-    def __init__(self, name, desc, owner_id, type="PERMISSION"):
+    def __init__(self, name, desc):
         self.name = name
         self.desc = desc
-        self.owner_id = owner_id
-        self.type = type
 
     # Add a Role as a Parent to this Role. This automatically adds to the Children set via the relationship
     def add_parent(self, parent):
@@ -146,7 +140,7 @@ class Role(db.Model):
 
     # To_String method
     def __repr__(self):
-        return str(self.id) + " : " + self.name + " : " + self.type
+        return str(self.id) + " : " + self.name + " : " + self.desc
 
 
 # REQUEST OBJECT ===
@@ -160,7 +154,7 @@ class Request(db.Model):
     requested_for_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     requested_by_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     comment = Column(String(255))
-    status = Column(Enum("PENDING", "REJECTED", "APPROVED", "IMPLEMENTED", "REVOKED"))
+    status = Column(Enum("PENDING", "REJECTED", "APPROVED", "REVOKED"))
 
     # Method for creating new Request objects
     def __init__(self, role_id, requested_for_id, requested_by_id, comment=None, status="PENDING"):
@@ -214,8 +208,6 @@ Role.approvers = relationship(
     lazy='dynamic'
 )
 
-# Define relationship between a Role and the Role's Owner
-User.owned_roles = relationship('Role', backref='owner', lazy='dynamic')
 # Define relationship between a User and Requests made for them
 User.requests_for = relationship('Request', backref='requested_for',
                                  lazy='dynamic', foreign_keys=[Request.requested_for_id])
@@ -225,7 +217,6 @@ User.requests_by = relationship('Request', backref='requested_by',
 # Define relationship between a User and their Active Roles
 User.active_roles = relationship('Request', lazy='dynamic',
                                  primaryjoin="and_(User.id==Request.requested_for_id, "
-                                             "or_(Request.status=='APPROVED', "
-                                             "Request.status=='IMPLEMENTED'))")
+                                             "or_(Request.status=='APPROVED'))")
 # Define relationship between a User and their Manager. Note: Must be declared outside of the class.
 User.manager = relationship('User', backref='subordinates', remote_side=User.id, post_update=True)

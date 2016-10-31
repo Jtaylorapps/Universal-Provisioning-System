@@ -107,7 +107,7 @@ def browse(type, page_num=1):
         # Search Role Page
         page = "browse_roles.html"
         # Create column headers
-        headers = ["Name", "Owner", "Description"]
+        headers = ["Name", "Description"]
 
         if form.submit.data and form.validate_on_submit():
             # Search the role name column
@@ -145,7 +145,7 @@ def create_role():
     form = RoleCreateForm()
     if form.submit.data and form.validate_on_submit():
         # Create the new Role object
-        new_role = Role(form.name.data, form.desc.data, g.user.id, form.type.data)
+        new_role = Role(form.name.data, form.desc.data)
         # Add specified Approvers to the new Role
         new_role.add_approvers(form.approvers.data)
         # Add specified Parents to the new Role

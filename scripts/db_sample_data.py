@@ -23,19 +23,19 @@ with db.session.no_autoflush:
                         User(604051, "Regan Yee", 604049),
                         User(604052, "Random Guy", 604048, "tester", False),
                         User(604053, "Some Intern", 604051)])
-    role1 = Role("UPS User", "UPS Access", 604048, "FUNCTIONAL")
-    role2 = Role("UPS Role Create", "UPS Role Creation Access", 604048, "FUNCTIONAL")
-    role3 = Role("UPS Maintenance", "UPS Admin Read Access", 604048, "FUNCTIONAL")
-    role4 = Role("UPS Admin", "UPS Admin Access", 604048, "FUNCTIONAL")
-    role5 = Role("My Role 1", "Child UPS Role", 604049, "APPLICATION")
-    role6 = Role("My Role 2", "Child UPS Admin Role", 604049, "APPLICATION")
+    role1 = Role("UPS User", "UPS Access")
+    role2 = Role("UPS Role Create", "UPS Role Creation Access")
+    role3 = Role("UPS Maintenance", "UPS Admin Read Access")
+    role4 = Role("UPS Admin", "UPS Admin Access")
+    role5 = Role("My Role 1", "Child UPS Role")
+    role6 = Role("My Role 2", "Child UPS Admin Role")
     db.session.add_all([role1, role2, role3, role4, role5, role6,
-                        Role("Test Role 1", "Where am I", 604050, "FUNCTIONAL"),
-                        Role("Test Role 2", "Whats happening", 604050, "PERMISSION"),
-                        Role("Test Role 3", "Test", 604050, "APPLICATION"),
-                        Role("Test Role 4", "Test", 604050, "PERMISSION"),
-                        Role("Test Role 5", "Testing123", 604050, "APPLICATION")])
-    db.session.add_all([Request(4, 604048, 604048, "TestComment", "IMPLEMENTED"),
+                        Role("Test Role 1", "Where am I"),
+                        Role("Test Role 2", "Whats happening"),
+                        Role("Test Role 3", "Test"),
+                        Role("Test Role 4", "Test"),
+                        Role("Test Role 5", "Testing123")])
+    db.session.add_all([Request(4, 604048, 604048, "TestComment", "REVOKED"),
                         Request(3, 604049, 604048, "TestComment", "APPROVED"),
                         Request(2, 604050, 604049, "TestComment", "PENDING"),
                         Request(3, 604051, 604050, "TestComment", "REJECTED")])

@@ -4,10 +4,6 @@
         <h1>Role
             <small>{{ role.name }}</small>
         </h1>
-        <h3>Owner:
-            {{ role.owner.name }}
-            (<a href="{{ url_for('user_page', user_id=role.owner.id) }}">{{ role.owner.id }})</a>
-        </h3>
         <hr>
         <!-- Role Description well -->
         <h4>Description</h4>

@@ -56,9 +56,6 @@ def validate_role_name(form, field):
 def validate_role_inheritance(form, field):
     children = form.children.data
     parents = form.parents.data
-    if form.type.data == 'PERMISSION' and children is not None:
-        # Throw this if a child role is attempted to be added to a Permission
-        raise ValidationError('Unable to add a child to a Permission.')
     if any(x in parents for x in children):
         # Throw this if a Role is in both the Parent and Children dropdown
         raise ValidationError('Unable to add a Role as both a parent and child.')
@@ -90,12 +87,6 @@ class RoleCreateForm(Form):
     name = StringField(label='Role Name', id='TXT_Name', validators=[InputRequired()])
     # Description text area
     desc = TextAreaField(label='Role Description', id='TXT_Desc')
-    # Type select field
-    type = SelectField(label='Role Type', id="DRP_Type",
-                       choices=[('PERMISSION', 'PERMISSION'),
-                                ('APPLICATION', 'APPLICATION'),
-                                ('FUNCTIONAL', 'FUNCTIONAL')],
-                       default='PERMISSION', validators=[InputRequired()])
     # Approvers select field
     approvers = DynamicSelectMultipleField(label='Add Approvers', id='DRP_Approvers', choices=[], coerce=int)
     # Parent select field

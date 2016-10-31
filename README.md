@@ -6,7 +6,7 @@ This is a work-in-progress and not all functionality is complete, however many o
 Illustrates a firm grasp of the following technologies and concepts:
 - Python/Flask
 - Web Design (Bootstrap)
-  - HTML, CSS, JQuery
+  - HTML, CSS, JQuery, Jinja
 - Database Object-Relational Mapping (Sql-Alchemy)
   - Database in third normal form
   - Includes many-to-many relationships, mapping tables, and complex database constraints
