@@ -1,15 +1,44 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class="jumbotron">
-        <h1>Welcome to UPS
-            <span style="float:right;"><img src="../static/img/StateStreetLogo.png" height="75" width="225"></span><br>
-        </h1>
-        <p>A self-service tool for centralized access request
-            <br>and entitlement management within SSGA systems.
-        </p>
-        <p><a class="btn btn-primary btn-lg"
-              href="https://collaborate.statestr.com/sites/Knowledge-Management-1/support_files/Pub1/Applications/UPS/UPS_Overview.pdf"
-              role="button">Learn more</a>
-        </p>
+    <div class="feed">
+    	<div class="feed-left">
+    		<div class="feed-title">
+    			My Incoming Requests
+    		</div>
+    		<div class="feed-card">
+    			<div class="feed-card-title">this guy requests that guy to be a guy who guys</div>
+    			<div class="feed-card-actions">
+    				<button class="btn btn-default">reject</button>
+    				<button class="btn btn-primary">accept</button>
+    			</div>
+    		</div>
+    		<div class="feed-card">
+    			<div class="feed-card-title">this guy requests that guy to be a guy who guys</div>
+    			<div class="feed-card-actions">
+    				<button class="btn btn-default">reject</button>
+    				<button class="btn btn-primary">accept</button>
+    			</div>
+    		</div>
+    	</div>
+    	<div class="feed-right">
+    		<div class="feed-title">
+    			My Outgoing Requests
+    		</div>
+    		{% for row in outgoing %}
+				<div class="feed-card">
+	    			<div class="feed-card-title">
+	    				<a href="{{ url_for('role_page', role_id=row.role_id) }}">{{ row.requested_role.name }}</a>
+	    				<br/>
+	    				Requested for
+	    				<br />
+	    				{{ row.requested_for.name }}
+	    				(<a href="{{ url_for('user_page', user_id=row.requested_for_id) }}">{{ row.requested_for.id }}</a>)
+	    			</div>
+	    			<div class="feed-card-actions">
+	    				{{ row.status }}
+	    			</div>
+	    		</div>
+		    {% endfor %}		
+    	</div>
     </div>
 {% endblock %}

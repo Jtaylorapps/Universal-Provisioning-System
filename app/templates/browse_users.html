@@ -1,23 +1,25 @@
 {% extends "browse.html" %}
 {% block panel_heading %}Search UPS Users{% endblock %}
 {% block panel_body %}
-    <!-- Search Form -->
-    <form name="search" method=POST class="form-horizontal" role="search">
-        <!-- Form submission tag -->
-        {{ form.hidden_tag() }}
-        <div style="display: inline-block;">
-            <div class="col-lg-4">
-                <div class="input-group">
-                    <!-- Search text box -->
-                    {{ form.query(maxlength=120, class_="form-control", placeholder="Enter Search Query", autofocus=true, required=true) }}
-                    <!-- Submit button -->
-                    <div class="input-group-btn">
-                        {{ form.submit(class_="btn btn-primary") }}
+    <div class="browse-panel-search">
+        <!-- Search Form -->
+        <form name="search" method=POST class="form-horizontal" role="search">
+            <!-- Form submission tag -->
+            {{ form.hidden_tag() }}
+            <div style="display: inline-block;">
+                <div class="col-lg-4">
+                    <div class="input-group">
+                        <!-- Search text box -->
+                        {{ form.query(maxlength=120, class_="form-control", placeholder="Enter Search Query", autofocus=true, required=true) }}
+                        <!-- Submit button -->
+                        <div class="input-group-btn">
+                            {{ form.submit(class_="btn btn-primary") }}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 {% endblock %}
 {% block table_body %}
     {% for row in data.items %}

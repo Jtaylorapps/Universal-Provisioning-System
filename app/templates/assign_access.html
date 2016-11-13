@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
+    <a href="{{ url_for('browse', type='requests') }}"> < browse </a>
+    <div class="feed-title">
+        Assign Access
+    </div>
     <!-- Search Form -->
     <form name="assign_access" method=POST class="form-horizontal" role="form">
         <!-- Form submission tag -->
         {{ form.hidden_tag() }}
         <div class="panel panel-primary">
-            <!-- Panel Header -->
-            <div class="panel-heading">
-                Assign Access
-            </div>
             <!-- Panel Body -->
             <div class="panel-body">
                 <!-- User select field -->
