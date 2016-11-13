@@ -5,20 +5,27 @@
             <div class="feed-title">
                 My Incoming Requests
             </div>
-            <div class="feed-card">
-                <div class="feed-card-title">this guy requests that guy to be a guy who guys</div>
-                <div class="feed-card-actions">
-                    <button class="btn btn-default">reject</button>
-                    <button class="btn btn-primary">accept</button>
+            {% for row in incoming %}
+                <div class="feed-card">
+                    <div class="feed-card-title">
+                        <b><a href="{{ url_for('role_page', role_id=row.role_id) }}">{{ row.requested_role.name }}</a></b>
+                        <br/>
+                        Requested by
+                        <br/>
+                        - {{ row.requested_by.name }}
+                        (<a href="{{ url_for('user_page', user_id=row.requested_for_id) }}">{{ row.requested_for.id }}</a>)
+                        <br/>
+                        Requested for
+                        <br/>
+                        - {{ row.requested_for.name }}
+                        (<a href="{{ url_for('user_page', user_id=row.requested_for_id) }}">{{ row.requested_for.id }}</a>)
+                    </div>
+                    <div class="feed-card-actions">
+                        <button class="btn btn-default">Reject</button>
+                        <button class="btn btn-primary">Accept</button>
+                    </div>
                 </div>
-            </div>
-            <div class="feed-card">
-                <div class="feed-card-title">this guy requests that guy to be a guy who guys</div>
-                <div class="feed-card-actions">
-                    <button class="btn btn-default">reject</button>
-                    <button class="btn btn-primary">accept</button>
-                </div>
-            </div>
+            {% endfor %}
         </div>
         <div class="feed-right">
             <div class="feed-title">
@@ -27,7 +34,7 @@
             {% for row in outgoing %}
                 <div class="feed-card">
                     <div class="feed-card-title">
-                        <a href="{{ url_for('role_page', role_id=row.role_id) }}">{{ row.requested_role.name }}</a>
+                        <b><a href="{{ url_for('role_page', role_id=row.role_id) }}">{{ row.requested_role.name }}</a></b>
                         <br/>
                         Requested for
                         <br/>
