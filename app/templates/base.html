@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="UPS">
-    <meta name="author" content="SSGA">
+    <meta name="author" content="Jacob Taylor">
 
 
     <!-- Title and favicons -->
@@ -47,7 +47,11 @@
             </button>
             <!-- Navbar header -->
             <a class="navbar-brand" href="{{ url_for('index') }}">
+<<<<<<< HEAD
                 <span class="glyphicon glyphicon-home"></span> </a>
+=======
+                <span class="glyphicon glyphicon-home"></span> Universal Provisioning System</a>
+>>>>>>> master
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <!-- Left aligned portion of the navbar -->
@@ -122,7 +126,7 @@
             <!-- Link to the logged in user page -->
             {{ g.user.name }} (<a href="{{ url_for('user_page', user_id=g.user.id) }}">{{ g.user.id }}</a>)
         </p>
-        <p>&copy; 2016 State Street Global Advisors</p>
+        <p>&copy; 2016 - Jacob Taylor (jtaylorapps@gmail.com)</p>
     </footer>
 </div>
 
