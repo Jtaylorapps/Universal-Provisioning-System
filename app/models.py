@@ -143,6 +143,15 @@ class Role(db.Model):
         return str(self.id) + " : " + self.name + " : " + self.desc
 
 
+# REQUEST APPROVER MANY-TO-MANY MAPPING TABLE ===
+request_approvers = Table(
+    'request_approvers',
+    db.metadata,
+    Column('request_id', Integer, ForeignKey('requests.id'), primary_key=True),
+    Column('user_id', Integer, ForeignKey('users.id'), primary_key=True)
+)
+
+
 # REQUEST OBJECT ===
 class Request(db.Model):
     # Modal metadata
@@ -180,6 +189,20 @@ class Request(db.Model):
                             User.id.contains(query),
                             Role.name.contains(query)))
 
+    # Add a User as an Approver to this Request. This automatically adds to the approver_for_request back ref
+    def add_approver(self, approver):
+        if isinstance(approver, int):
+            approver = User.query.get(approver)
+        if isinstance(approver, User):
+            self.approvers.append(approver)
+        else:
+            raise TypeError("Invalid approver: " + str(approver))
+
+    # Add multiple Users as Approvers to this Request
+    def add_approvers(self, approvers):
+        for approver in approvers:
+            self.add_approver(approver)
+
     # To_String method
     def __repr__(self):
         return str(self.id) + " : " + str(self.role_id) + " : " + str(self.requested_for_id) + " : " + self.status
@@ -205,6 +228,15 @@ Role.approvers = relationship(
     primaryjoin=(Role.id == role_approvers.c.role_id),  # The primary mapping
     secondaryjoin=(User.id == role_approvers.c.user_id),  # The secondary mapping
     backref=backref('approver_for', lazy='dynamic'),
+    lazy='dynamic'
+)
+# Define relationship between a Request and its Approvers
+Request.approvers = relationship(
+    'User',  # Specify the table we're forming a relationship with
+    secondary=request_approvers,  # Specify the mapping table
+    primaryjoin=(Request.id == request_approvers.c.request_id),  # The primary mapping
+    secondaryjoin=(User.id == request_approvers.c.user_id),  # The secondary mapping
+    backref=backref('approver_for_requests', lazy='dynamic'),
     lazy='dynamic'
 )
 
