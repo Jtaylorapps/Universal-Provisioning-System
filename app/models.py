@@ -180,7 +180,6 @@ class Request(db.Model):
             new_request_approvers.add(requested_for_manager)
         # Add Approvers set as Approvers for this Request
         self.add_approvers(new_request_approvers)
-        print(list(self.approvers))
 
     # Check to see if there is an existing active request for the given User and Role
     @staticmethod
