@@ -172,6 +172,15 @@ class Request(db.Model):
         self.requested_by_id = requested_by_id
         self.comment = comment
         self.status = status
+        # Get Role approvers
+        new_request_approvers = set(Role.query.get(role_id).approvers)
+        # Get requested_for User manager if not None and add to approvers set
+        requested_for_manager = User.query.get(requested_for_id).manager
+        if requested_for_manager is not None:
+            new_request_approvers.add(requested_for_manager)
+        # Add Approvers set as Approvers for this Request
+        self.add_approvers(new_request_approvers)
+        print(list(self.approvers))
 
     # Check to see if there is an existing active request for the given User and Role
     @staticmethod

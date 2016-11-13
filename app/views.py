@@ -173,16 +173,8 @@ def assign():
             for role in form.roles.data:
                 # If there is not an existing, identical, and active Request, create a new one
                 if Request.get_active_request(role, user) is None:
-                    # Create a new Request object
-                    new_request = Request(role, user, g.user.id, form.comment.data)
-                    # Get Role approvers and add to Request approvers
-                    new_request_approvers = set(Role.query.get(role).approvers)
-                    # Get User manager and add to Request approvers
-                    new_request_approvers.add(User.query.get(user).manager)
-                    # Add the unique set of approvers to the new Request
-                    new_request.add_approvers(new_request_approvers)
                     # Add the new Request to the database
-                    db.session.add(new_request)
+                    db.session.add(Request(role, user, g.user.id, form.comment.data))
         # Save database changes
         db.session.commit()
         # Redirect back to the page
