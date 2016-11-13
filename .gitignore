@@ -1,5 +1,8 @@
 __pycache__
 app/__pycache__
 app/__pycache__/*
-.idea/*db_repository
+.idea/*
+.idea
+db_repository
 db_repository/*
+app.db
