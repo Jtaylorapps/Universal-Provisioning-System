@@ -47,12 +47,19 @@
             </button>
             <!-- Navbar header -->
             <a class="navbar-brand" href="{{ url_for('index') }}">
+<<<<<<< HEAD
+                <span class="glyphicon glyphicon-home"></span> </a>
+=======
                 <span class="glyphicon glyphicon-home"></span> Universal Provisioning System</a>
+>>>>>>> master
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <!-- Left aligned portion of the navbar -->
             <ul class="nav navbar-nav">
-                <!-- My Profile dropdown -->
+                <li><a href="{{ url_for('browse', type='users') }}">Users</a></li>
+                <li><a href="{{ url_for('browse', type='roles') }}">Roles</a></li>
+                <li><a href="{{ url_for('browse', type='requests') }}">Requests</a></li>
+               <!-- My Profile dropdown --><!--
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                        aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> Profile</a>
@@ -63,7 +70,7 @@
                         <li><a href="#">Proxy Users</a></li>
                     </ul>
                 </li>
-                <!-- Search dropdown -->
+                <!-- Search dropdown --><!--
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false"><span class="glyphicon glyphicon-search"></span> Search</a>
@@ -73,9 +80,9 @@
                         <li><a href="{{ url_for('browse', type='requests') }}">Requests</a></li>
                     </ul>
                 </li>
-                <!-- Access control button -->
+                <!-- Access control button --><!--
                 <li><a href="{{ url_for('assign') }}"><span class="glyphicon glyphicon-th-list"></span> Assign</a></li>
-                <!-- RoleCreate dropdown -->
+                <!-- RoleCreate dropdown
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                        aria-haspopup="true" aria-expanded="false">Role Actions <span
@@ -85,13 +92,23 @@
                         <li><a href="#">Edit Role</a></li>
                     </ul>
                 </li>
+            -->
             </ul>
             <!-- Right aligned portion of the navbar -->
             <ul class="nav navbar-nav navbar-right">
-                <!-- Help page -->
+                <!-- Help page --><!--
                 <li><a href="#"><span class="glyphicon glyphicon-question-sign"></span> Help</a></li>
                 <!-- Log out -->
-                <li><a href="{{ url_for('logout') }}">Log Out <span class="glyphicon glyphicon-log-in"></span></a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                       aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('user_page', user_id=g.user.id, subpage='roles') }}">My Active Roles</a></li>
+                        <li><a href="#">Proxy Users</a></li>
+                        <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+                    </ul>
+                </li>
+                
             </ul>
         </div>
     </div>

@@ -1,0 +1,63 @@
+.feed {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.feed-left {
+	display: flex;
+	flex: 1;
+	align-items: flex-start;
+	flex-direction: column;
+	justify-content: flex-start;
+}
+
+.feed-right {
+	display: flex;
+	flex: 1;
+	align-items: flex-start;
+	flex-direction: column;
+	justify-content: flex-start;
+}
+
+.feed-title {
+	font-size: 24px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+.feed-card {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	border-radius: 2px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+	padding: 10px;
+	width: 300px;
+	min-height: 150px;
+	margin-bottom: 20px;
+	background-color: #fff;
+	justify-content: space-between;
+}
+
+.feed-card-title {
+	font-size: 18px;
+}
+
+.feed-card-actions {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	width: 100%;
+}
+
+.btn {
+	margin: 0px 5px !important;
+}
+
+@media (max-width: 700px) {
+	.feed-card {
+		width: 200px;
+	}
+}

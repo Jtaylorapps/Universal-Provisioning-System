@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
+    <a href="{{ url_for('browse', type='roles') }}"> < browse </a>
+    <div class="feed-title">
+        Create UPS Role
+    </div>
     <!-- Search Form -->
     <form name="create_role" method=POST class="form-horizontal" role="form">
         <!-- Form submission tag -->
         {{ form.hidden_tag() }}
         <div class="panel panel-primary">
-            <!-- Panel Header -->
-            <div class="panel-heading">
-                Create UPS Role
-            </div>
             <!-- Panel Body -->
             <div class="panel-body">
                 <!-- Role Name text field -->

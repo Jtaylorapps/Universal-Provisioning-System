@@ -45,7 +45,10 @@ def login():
 @app.route('/index/')
 @login_required
 def index():
-    return render_template('index.html')
+    user = g.user
+
+    outgoing = user.requests_by.all()
+    return render_template('index.html', outgoing=outgoing)
 
 
 # Handle all of the user pages
