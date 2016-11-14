@@ -1,7 +1,7 @@
 import json
 
 from flask import render_template, redirect, abort, url_for, request, g
-from flask.ext.login import logout_user, current_user, login_required
+from flask_login import logout_user, current_user, login_required
 
 from app import app, lm
 from config import *

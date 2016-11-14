@@ -19,8 +19,9 @@
                 </div>
             </div>
         </form>
-        <a href="/rolecreate/" type="button" class="btn btn-primary browse-new-btn" aria-label="Left Align">
-          new role
+        <a href="{{ url_for('create_role') }}" type="button" class="btn btn-primary browse-new-btn"
+           aria-label="Left Align">
+            New Role
         </a>
     </div>
 {% endblock %}
