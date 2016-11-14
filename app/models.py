@@ -216,7 +216,7 @@ class Request(db.Model):
     # Search for a Request with the given query. Searches requested_for name and ID as well as requested_role name
     @staticmethod
     def search(query):
-        return Request.query.join(Request.requested_for_id) \
+        return Request.query.join(Request.requested_for) \
             .join(Request.requested_role) \
             .filter(or_(User.name.contains(query),
                         User.id.contains(query),
