@@ -47,10 +47,14 @@ def login():
 def index():
     if request.method == 'POST':
         if 'Approve' in request.form:
+            # If an approval was submitted, set approval_status to approved
             g.user.update_approval(int(request.form['Approve']), "APPROVED")
         elif 'Reject' in request.form:
+            # If a rejection was submitted, set approval_status to rejected
             g.user.update_approval(int(request.form['Reject']), "REJECTED")
-    incoming = g.user.approver_for_requests.all()
+    # Get active incoming Requests for the current User
+    incoming = g.user.active_approvals.all()
+    # Get outgoing Requests for the current User
     outgoing = g.user.requests_by.all()
     return render_template('index.html', incoming=incoming, outgoing=outgoing)
 

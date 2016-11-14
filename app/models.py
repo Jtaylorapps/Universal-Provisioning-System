@@ -1,4 +1,4 @@
-from sqlalchemy import ForeignKey, Column, Integer, String, Enum, Boolean, Table, or_, and_
+from sqlalchemy import ForeignKey, Column, Integer, String, Enum, Boolean, Table, or_, and_, desc
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy_utils import PasswordType
 
@@ -49,11 +49,16 @@ class User(db.Model):
     def search(query):
         return User.query.filter(or_(User.id.contains(query), User.name.contains(query)))
 
+    # Update this User's approval status for the given Request
     def update_approval(self, request_id, updated_status="PENDING"):
         db.session.execute(request_approvers.update()
                            .where(request_approvers.columns.request_id == request_id)
                            .where(request_approvers.columns.user_id == self.id)
                            .values(approval_status=updated_status))
+        # If a single Approver rejects a Request, set the Request status to REJECTED
+        if updated_status == "REJECTED":
+            Request.query.get(request_id).update_status(updated_status)
+        db.session.commit()
 
     # To_String method
     def __repr__(self):
@@ -218,6 +223,10 @@ class Request(db.Model):
         for approver in approvers:
             self.add_approver(approver)
 
+    # Update the status of the Request
+    def update_status(self, updated_status="PENDING"):
+        self.status = updated_status
+
     # To_String method
     def __repr__(self):
         return str(self.id) + " : " + str(self.role_id) + " : " + str(self.requested_for_id) + " : " + self.status
@@ -254,16 +263,25 @@ Request.approvers = relationship(
     backref=backref('approver_for_requests', lazy='dynamic'),
     lazy='dynamic'
 )
+# Define relationship between a User and Approvals pending their action
+Request.pending_approvals = relationship(
+    'User',  # Specify the table we're forming a relationship with
+    secondary=request_approvers,  # Specify the mapping table
+    primaryjoin=(and_(Request.id == request_approvers.c.request_id,
+                      request_approvers.c.approval_status == 'PENDING')),  # The primary mapping
+    secondaryjoin=(User.id == request_approvers.c.user_id),  # The secondary mapping
+    backref=backref('active_approvals', lazy='dynamic'),
+    lazy='dynamic'
+)
 
 # Define relationship between a User and Requests made for them
 User.requests_for = relationship('Request', backref='requested_for',
                                  lazy='dynamic', foreign_keys=[Request.requested_for_id])
-# Define relationship between a User and Requests that they have made
+# Define relationship between a User and Requests that they have made. Sorted from newest Request to oldest.
 User.requests_by = relationship('Request', backref='requested_by',
-                                lazy='dynamic', foreign_keys=[Request.requested_by_id])
+                                lazy='dynamic', foreign_keys=[Request.requested_by_id], order_by=desc(Request.id))
 # Define relationship between a User and their Active Roles
 User.active_roles = relationship('Request', lazy='dynamic',
-                                 primaryjoin="and_(User.id==Request.requested_for_id, "
-                                             "or_(Request.status=='APPROVED'))")
+                                 primaryjoin=and_(User.id == Request.requested_for_id, Request.status == 'APPROVED'))
 # Define relationship between a User and their Manager. Note: Must be declared outside of the class.
 User.manager = relationship('User', backref='subordinates', remote_side=User.id, post_update=True)
