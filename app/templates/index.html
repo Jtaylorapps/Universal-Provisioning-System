@@ -1,9 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
+    <script type="text/javascript">
+        $(function () {
+          $("[rel='tooltip']").tooltip()
+        });
+        $(function () {
+          $('[data-toggle="popover"]').popover()
+        })
+    </script>
     <div class="feed">
         <div class="feed-left">
-            <div class="feed-title">
-                My Incoming Requests
+            <div style="display: flex;">
+                <div class="feed-title">
+                    My Incoming Requests 
+                </div>
+                <button data-placement="right" type="button" class="btn info-tip" data-toggle="popover" data-content="Incoming Requests are access requests for roles or users that you manage. Determine if the access is appropriate for the user it is being requested for and either Approve or Reject the request"><span class="glyphicon glyphicon-info-sign info-icon"/></button>
             </div>
             {% for row in incoming %}
                 <div class="feed-card">
@@ -32,10 +43,19 @@
                     </div>
                 </div>
             {% endfor %}
+            {% if incoming[0] is not defined %}
+                <div> none! </div>
+            {%endif %}
         </div>
         <div class="feed-right">
-            <div class="feed-title">
-                My Outgoing Requests
+            <div style="display:flex;flex-direction: row;">
+                <div class="feed-title">
+                    My Outgoing Requests
+                </div>
+                <button data-placement="left" type="button" class="btn info-tip" data-toggle="popover" data-content="Outgoing Requests are requests made by you for assigning access to yourself or another user"><span class="info-icon glyphicon glyphicon-info-sign"/></button>
+                <a href="/assign/" type="button" class="new-request-btn" aria-label="Left Align">
+                   <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                </a>
             </div>
             {% for row in outgoing %}
                 <div class="feed-card">
