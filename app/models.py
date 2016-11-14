@@ -51,23 +51,23 @@ class User(db.Model):
 
     # Update this User's approval status for the given Request
     def update_approval(self, request_id, updated_status="PENDING"):
-        db.session.execute(request_approvers.update()
-                           .where(request_approvers.columns.request_id == request_id)
-                           .where(request_approvers.columns.user_id == self.id)
-                           .values(approval_status=updated_status))
+        db.session.execute(request_approvers.update().
+                           where(and_(request_approvers.columns.request_id == request_id,
+                                      request_approvers.columns.user_id == self.id)).
+                           values(approval_status=updated_status))
         if updated_status == "REJECTED":
             # If a single Approver rejects a Request, set the Request status to REJECTED
             Request.query.get(request_id).update_status(updated_status)
         elif updated_status == "APPROVED":
             # Get number of Approvers who have approved this Request
-            approved = len(list(db.session.execute(request_approvers.select().
-                                                   where(request_approvers.columns.request_id == request_id).
-                                                   where(request_approvers.columns.user_id == self.id).
-                                                   where(request_approvers.columns.approval_status == updated_status))))
+            approved = len(list(db.session.execute(request_approvers.select().where(
+                and_(request_approvers.columns.request_id == request_id,
+                     request_approvers.columns.user_id == self.id,
+                     request_approvers.columns.approval_status == updated_status)))))
             # Get total number of Approvers for this Request
             total = len(list(db.session.execute(request_approvers.select().
-                                                where(request_approvers.columns.request_id == request_id).
-                                                where(request_approvers.columns.user_id == self.id))))
+                                                where(and_(request_approvers.columns.request_id == request_id,
+                                                           request_approvers.columns.user_id == self.id)))))
             if approved == total:
                 # If all Approvers approve a Request, set the Request status to APPROVED
                 Request.query.get(request_id).update_status(updated_status)
@@ -173,7 +173,7 @@ request_approvers = Table(
     db.metadata,
     Column('request_id', Integer, ForeignKey('requests.id'), primary_key=True),
     Column('user_id', Integer, ForeignKey('users.id'), primary_key=True),
-    Column('approval_status', Enum("PENDING", "REJECTED", "APPROVED"), unique=False, default="PENDING")
+    Column('approval_status', Enum("PENDING", "REJECTED", "APPROVED"), nullable=False, default="PENDING")
 )
 
 
@@ -209,9 +209,9 @@ class Request(db.Model):
     # Check to see if there is an existing active request for the given User and Role
     @staticmethod
     def get_active_request(role_id, user_id):
-        return Request.query.filter(and_(Request.role_id == role_id),
-                                    (Request.requested_for_id == user_id),
-                                    (Request.status != 'REJECTED')).first()
+        return Request.query.filter(Request.role_id == role_id,
+                                    Request.requested_for_id == user_id,
+                                    Request.status != 'REJECTED').first()
 
     # Search for a Request with the given query. Searches requested_for name and ID as well as requested_role name
     @staticmethod
@@ -280,9 +280,9 @@ Request.approvers = relationship(
 Request.pending_approvals = relationship(
     'User',  # Specify the table we're forming a relationship with
     secondary=request_approvers,  # Specify the mapping table
-    primaryjoin=(and_(Request.id == request_approvers.c.request_id,
-                      request_approvers.c.approval_status == 'PENDING',
-                      Request.status == 'PENDING')),  # The primary mapping
+    primaryjoin=and_(Request.id == request_approvers.c.request_id,
+                     request_approvers.c.approval_status == 'PENDING',
+                     Request.status == 'PENDING'),  # The primary mapping
     secondaryjoin=(User.id == request_approvers.c.user_id),  # The secondary mapping
     backref=backref('active_approvals', lazy='dynamic'),
     lazy='dynamic'

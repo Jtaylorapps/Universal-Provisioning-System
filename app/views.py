@@ -165,6 +165,7 @@ def create_role():
         new_role.add_children(form.children.data)
         # Add the new Role to the database
         db.session.add(new_role)
+        # Commit the new role to the database
         db.session.commit()
         # Redirect back to the page
         return redirect(url_for('role_page', role_id=new_role.id))
@@ -184,8 +185,8 @@ def assign():
                 if Request.get_active_request(role, user) is None:
                     # Add the new Request to the database
                     db.session.add(Request(role, user, g.user.id, form.comment.data))
-        # Save database changes
-        db.session.commit()
+                    # Save database changes
+                    db.session.commit()
         # Redirect back to the page
         return redirect(url_for('assign'))
     return render_template('assign_access.html', form=form)
@@ -195,34 +196,28 @@ def assign():
 @app.route("/finduser/", methods=['GET'])
 def find_user():
     # Search for the User with the given query
-    query = request.args.get('user')
-    users = User.search(query).all()
+    users = User.search(request.args.get('user')).all()
     # Results found, get needed information
     results = []
     for user in users:
         # Make a list in the form (id, text) for Select2 to parse
         results.append({"id": user.id, "text": user.name + " (" + str(user.id) + ")"})
     # Convert the first five results to JSON
-    results = json.dumps(results[:5])
-    # print(str(results))
-    return results
+    return json.dumps(results[:5])
 
 
 # Handle requests to look up a Role
 @app.route("/findrole/", methods=['GET'])
 def find_role():
     # Search for the Role with the given query
-    query = request.args.get('role')
-    roles = Role.search(query).all()
+    roles = Role.search(request.args.get('role')).all()
     # Results found, get needed information
     results = []
     for role in roles:
         # Make a list in the form (id, text) for Select2 to parse
         results.append({"id": role.id, "text": role.name})
     # Convert the first ten results to JSON
-    results = json.dumps(results[:10])
-    # print(str(results))
-    return results
+    return json.dumps(results[:10])
 
 
 @app.route("/logout/")
