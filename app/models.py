@@ -55,9 +55,21 @@ class User(db.Model):
                            .where(request_approvers.columns.request_id == request_id)
                            .where(request_approvers.columns.user_id == self.id)
                            .values(approval_status=updated_status))
-        # If a single Approver rejects a Request, set the Request status to REJECTED
         if updated_status == "REJECTED":
+            # If a single Approver rejects a Request, set the Request status to REJECTED
             Request.query.get(request_id).update_status(updated_status)
+        elif updated_status == "APPROVED":
+            approved = len(list(db.session.execute(request_approvers.select()
+                .where(request_approvers.columns.request_id == request_id)
+                .where(request_approvers.columns.user_id == self.id)
+                .where(
+                request_approvers.columns.approval_status == updated_status))))
+            total = len(list(db.session.execute(request_approvers.select()
+                                                .where(request_approvers.columns.request_id == request_id)
+                                                .where(request_approvers.columns.user_id == self.id))))
+            if approved == total:
+                # If a single Approver rejects a Request, set the Request status to REJECTED
+                Request.query.get(request_id).update_status(updated_status)
         db.session.commit()
 
     # To_String method
