@@ -49,11 +49,13 @@ class User(db.Model):
     def search(query):
         return User.query.filter(or_(User.id.contains(query), User.name.contains(query)))
 
+    # Update this User's approval status for the given Request
     def update_approval(self, request_id, updated_status="PENDING"):
         db.session.execute(request_approvers.update()
                            .where(request_approvers.columns.request_id == request_id)
                            .where(request_approvers.columns.user_id == self.id)
                            .values(approval_status=updated_status))
+        db.session.commit()
 
     # To_String method
     def __repr__(self):
@@ -254,6 +256,15 @@ Request.approvers = relationship(
     backref=backref('approver_for_requests', lazy='dynamic'),
     lazy='dynamic'
 )
+# Define relationship between a User and Approvals pending their action
+User.active_approvals = relationship(
+    'Request',  # Specify the table we're forming a relationship with
+    secondary=request_approvers,  # Specify the mapping table
+    primaryjoin=(User.id == request_approvers.c.user_id),  # The primary mapping
+    secondaryjoin=(and_(Request.id == request_approvers.c.request_id,
+                        request_approvers.c.approval_status == 'PENDING')),  # The secondary mapping
+    lazy='dynamic'
+)
 
 # Define relationship between a User and Requests made for them
 User.requests_for = relationship('Request', backref='requested_for',
@@ -263,7 +274,6 @@ User.requests_by = relationship('Request', backref='requested_by',
                                 lazy='dynamic', foreign_keys=[Request.requested_by_id])
 # Define relationship between a User and their Active Roles
 User.active_roles = relationship('Request', lazy='dynamic',
-                                 primaryjoin="and_(User.id==Request.requested_for_id, "
-                                             "or_(Request.status=='APPROVED'))")
+                                 primaryjoin=and_(User.id == Request.requested_for_id, Request.status == 'APPROVED'))
 # Define relationship between a User and their Manager. Note: Must be declared outside of the class.
 User.manager = relationship('User', backref='subordinates', remote_side=User.id, post_update=True)
