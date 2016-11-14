@@ -46,7 +46,10 @@
                 </div>
             {% endfor %}
             {% if incoming[0] is not defined %}
-                <div> none!</div>
+                <div class="empty-msg"> 
+                    <span class="empty-icon glyphicon glyphicon-ok"></span>
+                    all caught up!
+                </div>
             {% endif %}
         </div>
         <div class="feed-right">
@@ -80,6 +83,12 @@
                 <div><a href="{{ url_for('user_page', user_id=g.user.id, subpage='requests') }}">
                     <h4>More...</h4>
                 </a></div>
+            {% endif %}
+            {% if outgoing[0] is not defined %}
+                <div class="empty-msg"> 
+                    <span class="empty-icon glyphicon glyphicon-ok"></span>
+                    all caught up!
+                </div>
             {% endif %}
         </div>
     </div>
