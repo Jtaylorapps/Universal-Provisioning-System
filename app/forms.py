@@ -1,5 +1,5 @@
-from flask.ext.login import login_user
-from flask.ext.wtf import Form
+from flask_login import login_user
+from flask_wtf import FlaskForm
 from wtforms import StringField, BooleanField, SubmitField, PasswordField, SelectField, TextAreaField, \
     SelectMultipleField
 from wtforms.validators import InputRequired, ValidationError
@@ -62,7 +62,7 @@ def validate_role_inheritance(form, field):
 
 
 # Login form
-class LoginForm(Form):
+class LoginForm(FlaskForm):
     # Username field. Must have input and fit the correct formatting requirements
     username = StringField(label='Username', id='TXT_Username', validators=[InputRequired()])
     # Password field. Must have input.
@@ -74,7 +74,7 @@ class LoginForm(Form):
 
 
 # User search form
-class SearchForm(Form):
+class SearchForm(FlaskForm):
     # Search textfield
     query = StringField(label='Search', id='TXT_Search', validators=[InputRequired()])
     # Search button
@@ -82,7 +82,7 @@ class SearchForm(Form):
 
 
 # Role Create form
-class RoleCreateForm(Form):
+class RoleCreateForm(FlaskForm):
     # Name text field
     name = StringField(label='Role Name', id='TXT_Name', validators=[InputRequired()])
     # Description text area
@@ -98,7 +98,7 @@ class RoleCreateForm(Form):
 
 
 # Assign Access form
-class AssignAccessForm(Form):
+class AssignAccessForm(FlaskForm):
     # Users select field
     users = DynamicSelectMultipleField(label='Select Users', id='DRP_User',
                                        choices=[], coerce=int,
