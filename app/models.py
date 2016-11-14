@@ -268,7 +268,8 @@ Request.pending_approvals = relationship(
     'User',  # Specify the table we're forming a relationship with
     secondary=request_approvers,  # Specify the mapping table
     primaryjoin=(and_(Request.id == request_approvers.c.request_id,
-                      request_approvers.c.approval_status == 'PENDING')),  # The primary mapping
+                      request_approvers.c.approval_status == 'PENDING',
+                      Request.status == 'PENDING')),  # The primary mapping
     secondaryjoin=(User.id == request_approvers.c.user_id),  # The secondary mapping
     backref=backref('active_approvals', lazy='dynamic'),
     lazy='dynamic'
