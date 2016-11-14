@@ -59,16 +59,17 @@ class User(db.Model):
             # If a single Approver rejects a Request, set the Request status to REJECTED
             Request.query.get(request_id).update_status(updated_status)
         elif updated_status == "APPROVED":
-            approved = len(list(db.session.execute(request_approvers.select()
-                .where(request_approvers.columns.request_id == request_id)
-                .where(request_approvers.columns.user_id == self.id)
-                .where(
-                request_approvers.columns.approval_status == updated_status))))
-            total = len(list(db.session.execute(request_approvers.select()
-                                                .where(request_approvers.columns.request_id == request_id)
-                                                .where(request_approvers.columns.user_id == self.id))))
+            # Get number of Approvers who have approved this Request
+            approved = len(list(db.session.execute(request_approvers.select().
+                                                   where(request_approvers.columns.request_id == request_id).
+                                                   where(request_approvers.columns.user_id == self.id).
+                                                   where(request_approvers.columns.approval_status == updated_status))))
+            # Get total number of Approvers for this Request
+            total = len(list(db.session.execute(request_approvers.select().
+                                                where(request_approvers.columns.request_id == request_id).
+                                                where(request_approvers.columns.user_id == self.id))))
             if approved == total:
-                # If a single Approver rejects a Request, set the Request status to REJECTED
+                # If all Approvers approve a Request, set the Request status to APPROVED
                 Request.query.get(request_id).update_status(updated_status)
         db.session.commit()
 

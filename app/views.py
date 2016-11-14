@@ -52,10 +52,10 @@ def index():
         elif 'Reject' in request.form:
             # If a rejection was submitted, set approval_status to rejected
             g.user.update_approval(int(request.form['Reject']), "REJECTED")
-    # Get active incoming Requests for the current User
-    incoming = g.user.active_approvals.all()
-    # Get outgoing Requests for the current User
-    outgoing = g.user.requests_by.all()
+    # Get first five active incoming Requests for the current User
+    incoming = g.user.active_approvals.limit(5).all()
+    # Get first five outgoing Requests for the current User
+    outgoing = g.user.requests_by.limit(5).all()
     return render_template('index.html', incoming=incoming, outgoing=outgoing)
 
 
