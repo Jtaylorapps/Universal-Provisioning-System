@@ -10,6 +10,13 @@ body {
     padding-bottom: 40px;
     color: #5a5a5a;
     background-color: #eee !important;
+    height: 100vh;
+}
+
+.container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .panel {
