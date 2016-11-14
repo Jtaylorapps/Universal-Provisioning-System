@@ -41,10 +41,15 @@ def login():
 
 
 # Handle the index page
-@app.route('/')
-@app.route('/index/')
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index/', methods=['GET', 'POST'])
 @login_required
 def index():
+    if request.method == 'POST':
+        if 'Approve' in request.form:
+            g.user.update_approval(int(request.form['Approve']), "APPROVED")
+        elif 'Reject' in request.form:
+            g.user.update_approval(int(request.form['Reject']), "REJECTED")
     incoming = g.user.approver_for_requests.all()
     outgoing = g.user.requests_by.all()
     return render_template('index.html', incoming=incoming, outgoing=outgoing)

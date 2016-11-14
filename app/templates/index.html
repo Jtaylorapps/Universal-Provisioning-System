@@ -21,8 +21,14 @@
                         (<a href="{{ url_for('user_page', user_id=row.requested_for_id) }}">{{ row.requested_for.id }}</a>)
                     </div>
                     <div class="feed-card-actions">
-                        <button class="btn btn-default">Reject</button>
-                        <button class="btn btn-primary">Accept</button>
+                        <form name='approveForm' method='POST'>
+                            <button type="submit" name="Approve" value="{{ row.id }}" class="btn btn-primary">Accept
+                            </button>
+                        </form>
+                        <form name='rejectForm' method='POST'>
+                            <button type="submit" name="Reject" value="{{ row.id }}" class="btn btn-default">Reject
+                            </button>
+                        </form>
                     </div>
                 </div>
             {% endfor %}

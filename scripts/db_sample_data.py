@@ -48,6 +48,6 @@ with db.session.no_autoflush:
     db.session.commit()
 
 # Prove that changes were made
-print("Users: " + str(User.query.all()))
-print("Roles: " + str(Role.query.all()))
-print("Requests: " + str(Request.query.all()))
+print("Users:\n" + str(User.query.all()))
+print("Roles:\n" + str(Role.query.all()))
+print("Requests:\n" + str(Request.query.all()))

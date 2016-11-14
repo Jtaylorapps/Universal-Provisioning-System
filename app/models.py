@@ -49,6 +49,12 @@ class User(db.Model):
     def search(query):
         return User.query.filter(or_(User.id.contains(query), User.name.contains(query)))
 
+    def update_approval(self, request_id, updated_status="PENDING"):
+        db.session.execute(request_approvers.update()
+                           .where(request_approvers.columns.request_id == request_id)
+                           .where(request_approvers.columns.user_id == self.id)
+                           .values(approval_status=updated_status))
+
     # To_String method
     def __repr__(self):
         return str(self.id) + " : " + self.name + " : " + str(self.manager_id)
@@ -148,7 +154,8 @@ request_approvers = Table(
     'request_approvers',
     db.metadata,
     Column('request_id', Integer, ForeignKey('requests.id'), primary_key=True),
-    Column('user_id', Integer, ForeignKey('users.id'), primary_key=True)
+    Column('user_id', Integer, ForeignKey('users.id'), primary_key=True),
+    Column('approval_status', Enum("PENDING", "REJECTED", "APPROVED"), unique=False, default="PENDING")
 )
 
 
@@ -173,7 +180,7 @@ class Request(db.Model):
         self.comment = comment
         self.status = status
         # Get Role approvers
-        new_request_approvers = set(Role.query.get(role_id).approvers)
+        new_request_approvers = set(Role.query.get(role_id).approvers.all())
         # Get requested_for User manager if not None and add to approvers set
         requested_for_manager = User.query.get(requested_for_id).manager
         if requested_for_manager is not None:
@@ -192,10 +199,10 @@ class Request(db.Model):
     @staticmethod
     def search(query):
         return Request.query.join(Request.requested_for_id) \
-                .join(Request.requested_role) \
-                .filter(or_(User.name.contains(query),
-                            User.id.contains(query),
-                            Role.name.contains(query)))
+            .join(Request.requested_role) \
+            .filter(or_(User.name.contains(query),
+                        User.id.contains(query),
+                        Role.name.contains(query)))
 
     # Add a User as an Approver to this Request. This automatically adds to the approver_for_request back ref
     def add_approver(self, approver):
