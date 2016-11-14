@@ -39,10 +39,10 @@ with db.session.no_autoflush:
     # Commit changes
     db.session.commit()
     # Create some test Requests -------
-    db.session.add_all([Request(4, 604048, 604048, "TestComment", "REVOKED"),
-                        Request(3, 604049, 604048, "TestComment", "APPROVED"),
+    db.session.add_all([Request(4, 604048, 604048, "TestComment", "PENDING"),
+                        Request(3, 604049, 604048, "TestComment", "PENDING"),
                         Request(2, 604050, 604049, "TestComment", "PENDING"),
-                        Request(3, 604051, 604050, "TestComment", "REJECTED")])
+                        Request(3, 604051, 604050, "TestComment", "PENDING")])
     # Create some test Role Approvers
     role1.add_approvers([user1, user2])
     db.session.commit()
