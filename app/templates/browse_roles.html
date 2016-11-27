@@ -4,9 +4,9 @@
     <div class="browse-panel-search">
         <!-- Search Form -->
         <div class="col-xs-2">
-            <a href="{{ url_for('create_role') }}" type="button" class="btn btn-primary browse-new-btn"
+            <a href="{{ url_for('create_role') }}" type="button" class="btn btn-dark btn-primary browse-new-btn"
                aria-label="Left Align">
-                New Role
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Role
             </a>
         </div>
         <div class="col-xs-10">
@@ -19,7 +19,7 @@
                         {{ form.query(maxlength=120, class_="form-control", placeholder="Search for Role", autofocus=true, required=true) }}
                         <!-- Submit button -->
                         <div class="input-group-btn">
-                            {{ form.submit(class_="btn btn-primary") }}
+                            {{ form.submit(class_="btn btn-primary btn-dark") }}
                         </div>
                     </div>
                 </div>

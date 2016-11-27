@@ -24,12 +24,12 @@
                             
                             <td colspan="5" class="browse-next">
                                 {% if data.has_prev %}
-                                    <a style="float: left;" class="btn-primary pager-btn" href="{{ url_for('browse', type=type, page_num=data.prev_num) }}">
+                                    <a style="float: left;" class="btn-primary btn-dark pager-btn" href="{{ url_for('browse', type=type, page_num=data.prev_num) }}">
                                         Previous
                                     </a>
                                 {% endif %}
                                 {% if data.has_next %}
-                                    <a style="float: right;" class="btn-primary pager-btn" href="{{ url_for('browse', type=type, page_num=data.next_num) }}">
+                                    <a style="float: right;" class="btn-primary btn-dark pager-btn" href="{{ url_for('browse', type=type, page_num=data.next_num) }}">
                                         Next
                                     </a>
                                 {% endif %}

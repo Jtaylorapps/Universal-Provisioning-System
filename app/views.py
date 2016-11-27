@@ -188,7 +188,7 @@ def assign():
                     # Save database changes
                     db.session.commit()
         # Redirect back to the page
-        return redirect(url_for('assign'))
+        return redirect(url_for('index'))
     return render_template('assign_access.html', form=form)
 
 

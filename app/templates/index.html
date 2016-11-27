@@ -23,81 +23,86 @@
                     My Incoming Requests
                 </div>
                 <button data-placement="right" type="button" class="btn info-tip popup-marker" data-toggle="popover"
-                        data-content="Incoming Requests are access requests for roles or users that you manage. Determine if the access is appropriate for the user it is being requested for and either Approve or Reject the request">
+                        data-content="Incoming Requests are access requests for Roles you approve or Users that you manage.
+                        <br />Determine if the access is appropriate for the User it is being requested for and either Approve or Reject the Request">
                     <span class="glyphicon glyphicon-info-sign info-icon"></span></button>
             </div>
-            {% for row in incoming %}
-                <div class="feed-card">
-                    <div class="feed-card-title">
-                        <b><a href="{{ url_for('role_page', role_id=row.role_id) }}">{{ row.requested_role.name }}</a></b>
-                        <br/>
-                        Requested by
-                        <br/>
-                        - {{ row.requested_by.name }}
-                        (<a href="{{ url_for('user_page', user_id=row.requested_by.id) }}">{{ row.requested_by.id }}</a>)
-                        <br/>
-                        Requested for
-                        <br/>
-                        - {{ row.requested_for.name }}
-                        (<a href="{{ url_for('user_page', user_id=row.requested_for.id) }}">{{ row.requested_for.id }}</a>)
+            <div class="feed-cards">
+                {% for row in incoming %}
+                    <div class="feed-card">
+                        <div class="feed-card-title">
+                            <b><a href="{{ url_for('role_page', role_id=row.role_id) }}">{{ row.requested_role.name }}</a></b>
+                            <br/>
+                            Requested by
+                            <br/>
+                            - {{ row.requested_by.name }}
+                            (<a href="{{ url_for('user_page', user_id=row.requested_by.id) }}">{{ row.requested_by.id }}</a>)
+                            <br/>
+                            Requested for
+                            <br/>
+                            - {{ row.requested_for.name }}
+                            (<a href="{{ url_for('user_page', user_id=row.requested_for.id) }}">{{ row.requested_for.id }}</a>)
+                        </div>
+                        <div class="feed-card-actions">
+                            <form name='approveForm' method='POST'>
+                                <button type="submit" name="Approve" value="{{ row.id }}" class="btn btn-primary">Accept
+                                </button>
+                            </form>
+                            <form name='rejectForm' method='POST'>
+                                <button type="submit" name="Reject" value="{{ row.id }}" class="btn btn-default">Reject
+                                </button>
+                            </form>
+                        </div>
                     </div>
-                    <div class="feed-card-actions">
-                        <form name='approveForm' method='POST'>
-                            <button type="submit" name="Approve" value="{{ row.id }}" class="btn btn-primary">Accept
-                            </button>
-                        </form>
-                        <form name='rejectForm' method='POST'>
-                            <button type="submit" name="Reject" value="{{ row.id }}" class="btn btn-default">Reject
-                            </button>
-                        </form>
+                {% endfor %}
+                {% if incoming[0] is not defined %}
+                    <div class="empty-msg">
+                        <span class="empty-icon glyphicon glyphicon-ok"></span>
+                        all caught up!
                     </div>
-                </div>
-            {% endfor %}
-            {% if incoming[0] is not defined %}
-                <div class="empty-msg">
-                    <span class="empty-icon glyphicon glyphicon-ok"></span>
-                    all caught up!
-                </div>
-            {% endif %}
+                {% endif %}
+            </div>
         </div>
         <div class="feed-right">
-            <div style="display:flex;flex-direction: row;">
+            <div style="display:flex;flex-direction: row;flex:1;">
                 <div class="feed-title">
                     My Outgoing Requests
                 </div>
                 <button data-placement="left" type="button" class="btn info-tip popup-marker" data-toggle="popover"
-                        data-content="Outgoing Requests are requests made by you for assigning access to yourself or another user">
+                        data-content="Outgoing Requests are Requests made by you for assigning access to yourself or another User">
                     <span class="info-icon glyphicon glyphicon-info-sign"></span></button>
                 <a href="{{ url_for('assign') }}" type="button" class="new-request-btn" aria-label="Left Align">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                 </a>
             </div>
-            {% for row in outgoing %}
-                <div class="feed-card">
-                    <div class="feed-card-title">
-                        <b><a href="{{ url_for('role_page', role_id=row.role_id) }}">{{ row.requested_role.name }}</a></b>
-                        <br/>
-                        Requested for
-                        <br/>
-                        {{ row.requested_for.name }}
-                        (<a href="{{ url_for('user_page', user_id=row.requested_for_id) }}">{{ row.requested_for.id }}</a>)
+            <div class="feed-cards">
+                {% for row in outgoing %}
+                    <div class="feed-card">
+                        <div class="feed-card-title">
+                            <b><a href="{{ url_for('role_page', role_id=row.role_id) }}">{{ row.requested_role.name }}</a></b>
+                            <br/>
+                            Requested for
+                            <br/>
+                            {{ row.requested_for.name }}
+                            (<a href="{{ url_for('user_page', user_id=row.requested_for_id) }}">{{ row.requested_for.id }}</a>)
+                        </div>
+                        <div class="feed-card-actions">
+                            {{ row.status }}
+                        </div>
                     </div>
-                    <div class="feed-card-actions">
-                        {{ row.status }}
+                {% endfor %}
+                {% if outgoing|length == 5 %}
+                    <div><a href="{{ url_for('user_page', user_id=g.user.id, subpage='requests') }}">
+                        <h4>More...</h4>
+                    </a></div>
+                {% endif %}
+                {% if outgoing[0] is not defined %}
+                    <div class="empty-msg">
+                        <span class="empty-icon glyphicon glyphicon-ok"></span>
+                        all caught up!
                     </div>
-                </div>
-            {% endfor %}
-            {% if outgoing|length == 5 %}
-                <div><a href="{{ url_for('user_page', user_id=g.user.id, subpage='requests') }}">
-                    <h4>More...</h4>
-                </a></div>
-            {% endif %}
-            {% if outgoing[0] is not defined %}
-                <div class="empty-msg">
-                    <span class="empty-icon glyphicon glyphicon-ok"></span>
-                    all caught up!
-                </div>
-            {% endif %}
+                {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}
