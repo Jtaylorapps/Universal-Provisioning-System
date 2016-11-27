@@ -9,7 +9,7 @@
 .feed-left {
 	display: flex;
 	flex: 1;
-	align-items: flex-start;
+	align-items: center;
 	flex-direction: column;
 	justify-content: flex-start;
 }
@@ -17,7 +17,7 @@
 .feed-right {
 	display: flex;
 	flex: 1;
-	align-items: flex-start;
+	align-items: center;
 	flex-direction: column;
 	justify-content: flex-start;
 }
@@ -154,7 +154,6 @@ input {
 	color: rgba(0,0,0,.2);
 	align-items: center;
 	width: 100%;
-	margin-left: 50%;
 }
 
 .empty-icon {
