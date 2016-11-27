@@ -46,7 +46,7 @@
                 <span class="icon-bar"></span>
             </button>
             <!-- Navbar header -->
-            <a class="navbar-brand" href="{{ url_for('index') }}"><span class="glyphicon glyphicon-home"></span> </a>
+            <a class="navbar-brand" href="{{ url_for('index') }}">Universal Provisioning System</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <!-- Left aligned portion of the navbar -->
@@ -60,7 +60,8 @@
                 <!-- My Account dropdown -->
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                       aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span></a>
+                       aria-haspopup="true" aria-expanded="false"><span
+                            class="glyphicon glyphicon-user"></span> {{ g.user.name }}</a>
                     <ul class="dropdown-menu">
                         <li><a href="{{ url_for('user_page', user_id=g.user.id) }}">Profile</a></li>
                         <li><a href="{{ url_for('logout') }}">Log Out</a></li>
@@ -71,21 +72,22 @@
         </div>
     </div>
 </nav>
+<div class="container-wrapper">
+    <!-- Page content -->
+    <div class="container">
 
-<!-- Page content -->
-<div class="container">
+        <!-- Individual page content inheriting from the base is displayed here -->
+        {% block content %}{% endblock %}
 
-    <!-- Individual page content inheriting from the base is displayed here -->
-    {% block content %}{% endblock %}
-
-    <!-- FOOTER -->
-    <footer>
-        <p class="pull-right">Signed in as
-            <!-- Link to the logged in user page -->
-            {{ g.user.name }} (<a href="{{ url_for('user_page', user_id=g.user.id) }}">{{ g.user.id }}</a>)
-        </p>
-        <p>&copy; 2016 - Jacob Taylor (jtaylorapps@gmail.com)</p>
-    </footer>
+        <!-- FOOTER -->
+        <footer>
+            <div class="pull-right">Signed in as
+                <!-- Link to the logged in user page -->
+                {{ g.user.name }} (<a href="{{ url_for('user_page', user_id=g.user.id) }}">{{ g.user.id }}</a>)
+            </div>
+            <div>&copy; 2016 - Jacob Taylor (jtaylorapps@gmail.com)</div>
+        </footer>
+    </div>
 </div>
 
 </body>

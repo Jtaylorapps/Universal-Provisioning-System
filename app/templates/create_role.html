@@ -1,7 +1,22 @@
 {% extends "base.html" %}
 {% block content %}
+    <script type="text/javascript">
+        $(function() {
+            $('html').click(function () {
+                $('.popup-marker').popover('hide');
+            });
+
+            $('.popup-marker').popover({
+                html: true,
+                trigger: 'manual'
+            }).click(function(e) {
+                $(this).popover('toggle');
+                e.stopPropagation();
+            });
+        });
+    </script>
     <div class="feed-title">
-        Create UPS Role
+        Create New Role
     </div>
     <!-- Search Form -->
     <form name="create_role" method=POST class="form-horizontal" role="form">
@@ -22,17 +37,41 @@
                 </div>
                 <!-- Add Approvers drop down -->
                 <div class="form-group">
-                    <label class="col-md-2 control-label">{{ form.approvers.label }}</label>
+                    <label class="col-md-2 control-label" style="display: flex; align-items: center;justify-content: flex-end;">
+                        <button
+                                data-placement="top" type="button" class="btn info-tip-new popup-marker" data-toggle="popover"
+                                data-content="Users listed as Approvers must approve all Requests for the Role.
+                            <br />Requests will be approved by a manager if a Role has no Approvers.">
+                            <span class="glyphicon glyphicon-info-sign info-icon"></span>
+                        </button>
+                        {{ form.approvers.label }}
+                    </label>
                     <div class="col-md-8">{{ form.approvers(class_="form-control js-user-dropdown-ajax") }}</div>
                 </div>
                 <!-- Add Parent drop down -->
                 <div class="form-group">
-                    <label class="col-md-2 control-label">{{ form.parents.label }}</label>
+                    <label class="col-md-2 control-label" style="display: flex; align-items: center;justify-content: flex-end;">
+                        <button 
+                            data-placement="top" type="button" class="btn info-tip-new popup-marker" data-toggle="popover"
+                            data-content="All assignments for Parent Roles will include this new Role"
+                        >
+                            <span class="glyphicon glyphicon-info-sign info-icon"></span>
+                        </button>
+                        {{ form.parents.label }}
+                    </label>
                     <div class="col-md-8">{{ form.parents(class_="form-control js-role-dropdown-ajax") }}</div>
                 </div>
                 <!-- Add Children drop down -->
                 <div class="form-group">
-                    <label class="col-md-2 control-label">{{ form.children.label }}</label>
+                    <label class="col-md-2 control-label" style="display: flex;align-items: center;justify-content: flex-end;">
+                        <button 
+                            data-placement="top" type="button" class="btn info-tip-new popup-marker" data-toggle="popover"
+                            data-content="All assignments for the new Role with include these Children Roles"
+                        >
+                            <span class="glyphicon glyphicon-info-sign info-icon"></span>
+                        </button>
+                        {{ form.children.label }}
+                    </label>
                     <div class="col-md-8">{{ form.children(class_="form-control js-role-dropdown-ajax") }}</div>
                 </div>
                 {% if form.submit.errors %}
@@ -46,7 +85,11 @@
                 {% endif %}
                 <!-- Submit button -->
                 <div class="form-group">
-                    <div class="col-md-offset-2 col-md-8">{{ form.submit(class_="form-control btn-primary") }}</div>
+                    <div class="col-md-offset-2 col-md-8" style="display: flex;justify-content: flex-end;">
+                        <div>
+                        {{ form.submit(class_="form-control btn-dark btn-primary") }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
