@@ -29,7 +29,7 @@
 {% block table_body %}
     {% for row in data.items %}
         <tr>
-            <td class="col-md-1">{{ row.status }}</td>
+            <td class="col-md-1 status-{{ row.status }}">{{ row.status }}</td>
             <td class="col-md-3"><a
                     href="{{ url_for('role_page', role_id=row.role_id) }}">{{ row.requested_role.name }}</a></td>
             <td class="col-md-3">{{ row.requested_for.name }}
