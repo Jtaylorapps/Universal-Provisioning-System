@@ -7,9 +7,9 @@ This is a work-in-progress and not all functionality is complete, however many o
   * Install required packages
     * `pip3 install -r requirements.txt`
   * Create the database
-    * Execute `python3 scripts/db_create.py`
+    * `python3 scripts/db_create.py`
   * Populate the database with sample data
-    * Execute `python3 scripts/db_create.py`
+    * `python3 scripts/db_create.py`
   * Run the application
     * `python3 run.py`
     
