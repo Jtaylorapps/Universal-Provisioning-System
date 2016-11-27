@@ -4,7 +4,7 @@
     <div class="browse-panel-search">
         <!-- Search Form -->
         <div class="col-xs-2">
-            <a href="{{ url_for('assign') }}" type="button" class="btn btn-primary browse-new-btn" aria-label="Left Align">
+            <a href="{{ url_for('assign') }}" type="button" class="btn btn-dark btn-primary browse-new-btn" aria-label="Left Align">
                 New Request
             </a>
         </div>
@@ -18,7 +18,7 @@
                         {{ form.query(maxlength=120, class_="form-control", placeholder="Search for Request", autofocus=true, required=true) }}
                         <!-- Submit button -->
                         <div class="input-group-btn">
-                            {{ form.submit(class_="btn btn-primary") }}
+                            {{ form.submit(class_="btn btn-dark btn-primary") }}
                         </div>
                     </div>
                 </div>

@@ -27,7 +27,11 @@
                 </div>
                 <!-- Submit button -->
                 <div class="form-group">
-                    <div class="col-md-offset-2 col-md-8">{{ form.submit(class_="form-control btn-primary") }}</div>
+                    <div class="col-md-offset-2 col-md-8" style="display: flex;justify-content: flex-end;">
+                        <div>
+                            {{ form.submit(class_="form-control btn-dark btn-primary") }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
