@@ -2,7 +2,7 @@
 {% block content %}
     <script type="text/javascript">
         $(function() {
-            $('html').click(function(e) {
+            $('html').click(function () {
                 $('.popup-marker').popover('hide');
             });
 
@@ -16,7 +16,7 @@
         });
     </script>
     <div class="feed-title">
-        Create UPS Role
+        Create New Role
     </div>
     <!-- Search Form -->
     <form name="create_role" method=POST class="form-horizontal" role="form">
@@ -38,10 +38,10 @@
                 <!-- Add Approvers drop down -->
                 <div class="form-group">
                     <label class="col-md-2 control-label" style="display: flex; align-items: center;justify-content: flex-end;">
-                        <button 
-                            data-placement="top" type="button" class="btn info-tip-new popup-marker" data-toggle="popover"
-                            data-content="Users listed as Approvers must approve all Requests for the Role. Requests will be approved by a manager if a Role has no Approvers."
-                        >
+                        <button
+                                data-placement="top" type="button" class="btn info-tip-new popup-marker" data-toggle="popover"
+                                data-content="Users listed as Approvers must approve all Requests for the Role.
+                            <br />Requests will be approved by a manager if a Role has no Approvers.">
                             <span class="glyphicon glyphicon-info-sign info-icon"></span>
                         </button>
                         {{ form.approvers.label }}
