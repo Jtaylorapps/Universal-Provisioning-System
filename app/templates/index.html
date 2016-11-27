@@ -2,12 +2,26 @@
 {% block content %}
     <!-- Contains the Incoming and Outgoing Request cards functionality -->
     <script type="text/javascript">
-        $(function () {
+        /*$(function () {
             $("[rel='tooltip']").tooltip()
         });
-        $(function () {
-            $('[data-toggle="popover"]').popover()
-        })
+        /*$(function () {
+            $('.popup-marker').popover()
+        });*/
+        $(function() {
+            $('html').click(function(e) {
+                $('.popup-marker').popover('hide');
+            });
+
+            $('.popup-marker').popover({
+                html: true,
+                trigger: 'manual'
+            }).click(function(e) {
+                $(this).popover('toggle');
+                e.stopPropagation();
+            });
+        });
+
     </script>
     <div class="feed">
         <div class="feed-left">
@@ -15,7 +29,7 @@
                 <div class="feed-title">
                     My Incoming Requests
                 </div>
-                <button data-placement="right" type="button" class="btn info-tip" data-toggle="popover"
+                <button data-placement="right" type="button" class="btn info-tip popup-marker" data-toggle="popover"
                         data-content="Incoming Requests are access requests for roles or users that you manage. Determine if the access is appropriate for the user it is being requested for and either Approve or Reject the request">
                     <span class="glyphicon glyphicon-info-sign info-icon"></span></button>
             </div>
@@ -58,7 +72,7 @@
                 <div class="feed-title">
                     My Outgoing Requests
                 </div>
-                <button data-placement="left" type="button" class="btn info-tip" data-toggle="popover"
+                <button data-placement="left" type="button" class="btn info-tip popup-marker" data-toggle="popover"
                         data-content="Outgoing Requests are requests made by you for assigning access to yourself or another user">
                     <span class="info-icon glyphicon glyphicon-info-sign"></span></button>
                 <a href="{{ url_for('assign') }}" type="button" class="new-request-btn" aria-label="Left Align">

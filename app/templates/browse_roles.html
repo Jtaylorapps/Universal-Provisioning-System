@@ -3,10 +3,16 @@
 {% block panel_body %}
     <div class="browse-panel-search">
         <!-- Search Form -->
-        <form name="search" method=POST class="form-horizontal" role="search">
-            <!-- Form submission tag -->
-            {{ form.hidden_tag() }}
-            <div style="display: inline-block;">
+        <div class="col-xs-2">
+            <a href="{{ url_for('create_role') }}" type="button" class="btn btn-primary browse-new-btn"
+               aria-label="Left Align">
+                New Role
+            </a>
+        </div>
+        <div class="col-xs-10">
+            <form name="search" method=POST class="form-horizontal" role="search">
+                <!-- Form submission tag -->
+                {{ form.hidden_tag() }}
                 <div>
                     <div class="input-group">
                         <!-- Search text box -->
@@ -17,12 +23,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </form>
-        <a href="{{ url_for('create_role') }}" type="button" class="btn btn-primary browse-new-btn"
-           aria-label="Left Align">
-            New Role
-        </a>
+            </form>
+        </div>
     </div>
 {% endblock %}
 {% block table_body %}

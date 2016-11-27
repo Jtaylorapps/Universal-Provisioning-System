@@ -3,11 +3,16 @@
 {% block panel_body %}
     <div class="browse-panel-search">
         <!-- Search Form -->
-        <div style="margin-right: 20px;">
+        <div class="col-xs-2">
+            <a href="{{ url_for('assign') }}" type="button" class="btn btn-primary browse-new-btn" aria-label="Left Align">
+                New Request
+            </a>
+        </div>
+        <div class="col-xs-10">
             <form name="search" method=POST class="form-horizontal" role="search">
                 <!-- Form submission tag -->
                 {{ form.hidden_tag() }}
-                <div style="display: inline-block;">
+                <div>
                     <div class="input-group">
                         <!-- Search text box -->
                         {{ form.query(maxlength=120, class_="form-control", placeholder="Search for Request", autofocus=true, required=true) }}
@@ -18,11 +23,6 @@
                     </div>
                 </div>
             </form>
-        </div>
-        <div>
-            <a href="{{ url_for('assign') }}" type="button" class="btn btn-primary browse-new-btn" aria-label="Left Align">
-                New Request
-            </a>
         </div>
     </div>
 {% endblock %}

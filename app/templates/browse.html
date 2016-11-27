@@ -20,21 +20,21 @@
                     </tr>
                     </thead>
                     <tfoot>
-                        <tr class="pager">
-                            {% if data.has_prev %}
-                                <td class="previous">
-                                    <a class="btn-primary pager-btn" href="{{ url_for('browse', type=type, page_num=data.prev_num) }}">
+                        <tr class="browse-nav">
+                            
+                            <td colspan="5" class="browse-next">
+                                {% if data.has_prev %}
+                                    <a style="float: left;" class="btn-primary pager-btn" href="{{ url_for('browse', type=type, page_num=data.prev_num) }}">
                                         Previous
                                     </a>
-                                </td>
-                            {% endif %}
-                            {% if data.has_next %}
-                                <td class="next">
-                                    <a class="btn-primary pager-btn" href="{{ url_for('browse', type=type, page_num=data.next_num) }}">
+                                {% endif %}
+                                {% if data.has_next %}
+                                    <a style="float: right;" class="btn-primary pager-btn" href="{{ url_for('browse', type=type, page_num=data.next_num) }}">
                                         Next
                                     </a>
-                                </td>
-                            {% endif %}
+                                {% endif %}
+                            </td>
+                            
                         </tr>
                     </tfoot>
                     <!-- Populate the table with data -->

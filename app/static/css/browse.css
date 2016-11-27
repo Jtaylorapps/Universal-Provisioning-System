@@ -32,3 +32,11 @@
 	padding: 5px 10px;
 	border-radius: 4px;
 }
+
+.browse-nav > td {
+	border-left: 0px !important;
+	border-right: 0px !important;
+}	
+
+.browse-next {
+}
