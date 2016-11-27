@@ -41,12 +41,12 @@
                         Requested by
                         <br/>
                         - {{ row.requested_by.name }}
-                        (<a href="{{ url_for('user_page', user_id=row.requested_for_id) }}">{{ row.requested_for.id }}</a>)
+                        (<a href="{{ url_for('user_page', user_id=row.requested_by.id) }}">{{ row.requested_by.id }}</a>)
                         <br/>
                         Requested for
                         <br/>
                         - {{ row.requested_for.name }}
-                        (<a href="{{ url_for('user_page', user_id=row.requested_for_id) }}">{{ row.requested_for.id }}</a>)
+                        (<a href="{{ url_for('user_page', user_id=row.requested_for.id) }}">{{ row.requested_for.id }}</a>)
                     </div>
                     <div class="feed-card-actions">
                         <form name='approveForm' method='POST'>
