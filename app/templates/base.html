@@ -72,21 +72,22 @@
         </div>
     </div>
 </nav>
+<div class="container-wrapper">
+    <!-- Page content -->
+    <div class="container">
 
-<!-- Page content -->
-<div class="container">
+        <!-- Individual page content inheriting from the base is displayed here -->
+        {% block content %}{% endblock %}
 
-    <!-- Individual page content inheriting from the base is displayed here -->
-    {% block content %}{% endblock %}
-
-    <!-- FOOTER -->
-    <footer>
-        <div class="pull-right">Signed in as
-            <!-- Link to the logged in user page -->
-            {{ g.user.name }} (<a href="{{ url_for('user_page', user_id=g.user.id) }}">{{ g.user.id }}</a>)
-        </div>
-        <div>&copy; 2016 - Jacob Taylor (jtaylorapps@gmail.com)</div>
-    </footer>
+        <!-- FOOTER -->
+        <footer>
+            <div class="pull-right">Signed in as
+                <!-- Link to the logged in user page -->
+                {{ g.user.name }} (<a href="{{ url_for('user_page', user_id=g.user.id) }}">{{ g.user.id }}</a>)
+            </div>
+            <div>&copy; 2016 - Jacob Taylor (jtaylorapps@gmail.com)</div>
+        </footer>
+    </div>
 </div>
 
 </body>
