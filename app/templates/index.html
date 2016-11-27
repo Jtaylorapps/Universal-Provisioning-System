@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+    <!-- Contains the Incoming and Outgoing Request cards functionality -->
     <script type="text/javascript">
         $(function () {
             $("[rel='tooltip']").tooltip()
@@ -46,7 +47,7 @@
                 </div>
             {% endfor %}
             {% if incoming[0] is not defined %}
-                <div class="empty-msg"> 
+                <div class="empty-msg">
                     <span class="empty-icon glyphicon glyphicon-ok"></span>
                     all caught up!
                 </div>
@@ -85,7 +86,7 @@
                 </a></div>
             {% endif %}
             {% if outgoing[0] is not defined %}
-                <div class="empty-msg"> 
+                <div class="empty-msg">
                     <span class="empty-icon glyphicon glyphicon-ok"></span>
                     all caught up!
                 </div>
