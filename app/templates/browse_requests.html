@@ -3,25 +3,27 @@
 {% block panel_body %}
     <div class="browse-panel-search">
         <!-- Search Form -->
-        <form name="search" method=POST class="form-horizontal" role="search">
-            <!-- Form submission tag -->
-            {{ form.hidden_tag() }}
-            <div style="display: inline-block;">
-                <div class="col-lg-4">
+        <div style="margin-right: 20px;">
+            <form name="search" method=POST class="form-horizontal" role="search">
+                <!-- Form submission tag -->
+                {{ form.hidden_tag() }}
+                <div style="display: inline-block;">
                     <div class="input-group">
                         <!-- Search text box -->
-                        {{ form.query(maxlength=120, class_="form-control", placeholder="Enter Search Query", autofocus=true, required=true) }}
+                        {{ form.query(maxlength=120, class_="form-control", placeholder="Search for Request", autofocus=true, required=true) }}
                         <!-- Submit button -->
                         <div class="input-group-btn">
                             {{ form.submit(class_="btn btn-primary") }}
                         </div>
                     </div>
                 </div>
-            </div>
-        </form>
-        <a href="{{ url_for('assign') }}" type="button" class="btn btn-primary browse-new-btn" aria-label="Left Align">
-            New Request
-        </a>
+            </form>
+        </div>
+        <div>
+            <a href="{{ url_for('assign') }}" type="button" class="btn btn-primary browse-new-btn" aria-label="Left Align">
+                New Request
+            </a>
+        </div>
     </div>
 {% endblock %}
 {% block table_body %}

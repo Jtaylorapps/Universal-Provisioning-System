@@ -19,28 +19,29 @@
                         {% endfor %}
                     </tr>
                     </thead>
+                    <tfoot>
+                        <tr class="pager">
+                            {% if data.has_prev %}
+                                <td class="previous">
+                                    <a class="btn-primary pager-btn" href="{{ url_for('browse', type=type, page_num=data.prev_num) }}">
+                                        Previous
+                                    </a>
+                                </td>
+                            {% endif %}
+                            {% if data.has_next %}
+                                <td class="next">
+                                    <a class="btn-primary pager-btn" href="{{ url_for('browse', type=type, page_num=data.next_num) }}">
+                                        Next
+                                    </a>
+                                </td>
+                            {% endif %}
+                        </tr>
+                    </tfoot>
                     <!-- Populate the table with data -->
                     <tbody>
-                    {% block table_body %}{% endblock %}
+                        {% block table_body %}{% endblock %}
                     </tbody>
                 </table>
             </div>
     </div>
-    <!-- Pagination -->
-    <nav>
-        <ul class="pager">
-            {% if data.has_prev %}
-                <li class="previous">
-                    <a href="{{ url_for('browse', type=type, page_num=data.prev_num) }}">
-                        <span aria-hidden="true">&larr;</span> Previous</a>
-                </li>
-            {% endif %}
-            {% if data.has_next %}
-                <li class="next">
-                    <a href="{{ url_for('browse', type=type, page_num=data.next_num) }}">
-                        Next <span aria-hidden="true">&rarr;</span></a>
-                </li>
-            {% endif %}
-        </ul>
-    </nav>
 {% endblock %}

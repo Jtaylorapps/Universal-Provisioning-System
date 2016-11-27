@@ -7,10 +7,10 @@
             <!-- Form submission tag -->
             {{ form.hidden_tag() }}
             <div style="display: inline-block;">
-                <div class="col-lg-4">
+                <div>
                     <div class="input-group">
                         <!-- Search text box -->
-                        {{ form.query(maxlength=120, class_="form-control", placeholder="Enter Search Query", autofocus=true, required=true) }}
+                        {{ form.query(maxlength=120, class_="form-control", placeholder="Search for User", autofocus=true, required=true) }}
                         <!-- Submit button -->
                         <div class="input-group-btn">
                             {{ form.submit(class_="btn btn-primary") }}

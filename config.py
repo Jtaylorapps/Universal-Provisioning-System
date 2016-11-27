@@ -3,7 +3,7 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 # Toggle debug information. Must be False when in production.
-DEBUG = False
+DEBUG = True
 
 # Flask-WTF configuration
 WTF_CSRF_ENABLED = True

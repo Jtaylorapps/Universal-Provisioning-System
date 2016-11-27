@@ -16,3 +16,19 @@
 .browse-new-btn {
 	height: 34px;
 }
+
+.pager-browse {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.pager {
+	border-top: 1px solid #ddd !important; 
+}
+
+.pager-btn {
+	padding: 5px 10px;
+	border-radius: 4px;
+}
