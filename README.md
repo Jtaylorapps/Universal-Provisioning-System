@@ -2,15 +2,16 @@
 Python/Flask project designed to manage access of users to specific roles. 
 Each request must go through an approval process involving managers and role approvers.
 This is a work-in-progress and not all functionality is complete, however many of the core functionalities are completely finished.
+
 ## Running the Application ##
   * Install required packages
     * `pip3 install -r requirements.txt`
   * Create the database
-    * Execute `scripts/db_create.py`
+    * Execute `python3 scripts/db_create.py`
   * Populate the database with sample data
-    * Execute `scripts/db_create.py`
+    * Execute `python3 scripts/db_create.py`
   * Run the application
-    * Execute `run.py`
+    * `python3 run.py`
     
 ## Technologies ##
   * Python/Flask
