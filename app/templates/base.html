@@ -84,11 +84,11 @@
 
         <!-- FOOTER -->
         <footer>
-            <div class="pull-right">Signed in as
+            <div style="padding-right: 20px;" class="pull-right">Signed in as
                 <!-- Link to the logged in user page -->
                 {{ g.user.name }} (<a href="{{ url_for('user_page', user_id=g.user.id) }}">{{ g.user.id }}</a>)
             </div>
-            <div>&copy; 2016 - Jacob Taylor (jtaylorapps@gmail.com)</div>
+            <div style="padding-left: 20px;">&copy; 2016 - Jacob Taylor (jtaylorapps@gmail.com)</div>
         </footer>
     </div>
 </div>
