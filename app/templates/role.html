@@ -11,67 +11,67 @@
             {{ role.desc }}
         </div>
         <!-- Role Approvers well -->
-        <h4>Approvers</h4>
-        <div class="well well-sm">
-            {% for row in role.approvers %}{{ row.name }}<br>{% endfor %}
-        </div>
+        {% if role.approvers.count() > 0 %}
+            <h4>Approvers</h4>
+            <div class="well well-sm">
+                {% for row in role.approvers %}{{ row.name }}<br>{% endfor %}
+            </div>
+        {% endif %}
         <!-- Parent Roles table -->
-        <div class="panel panel-primary">
-            <!-- Panel Header -->
-            <div class=panel-heading>
-                Parent Roles
-            </div>
-            <div class="table-responsive">
-                <table class="table table-bordered">
-                    <!-- Create table header -->
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                    </tr>
-                    </thead>
-                    <!-- Populate the table with data -->
-                    <tbody>
-                    {% for row in role.parents %}
+        {% if role.parents.count() > 0 %}
+            <h4>Parent Roles</h4>
+            <div class="panel panel-primary">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <!-- Create table header -->
+                        <thead>
                         <tr>
-                            <td class="col-md-4">
-                                <a href="{{ url_for('role_page', role_id=row.id) }}">{{ row.name }}</a>
-                            </td>
-                            <td>{{ row.desc }}</td>
+                            <th>Name</th>
+                            <th>Description</th>
                         </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <!-- Populate the table with data -->
+                        <tbody>
+                        {% for row in role.parents %}
+                            <tr>
+                                <td class="col-md-4">
+                                    <a href="{{ url_for('role_page', role_id=row.id) }}">{{ row.name }}</a>
+                                </td>
+                                <td>{{ row.desc }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
+        {% endif %}
         <!-- Child Roles table -->
-        <div class="panel panel-primary">
-            <!-- Panel Header -->
-            <div class=panel-heading>
-                Child Roles
-            </div>
-            <div class="table-responsive">
-                <table class="table table-bordered">
-                    <!-- Create table header -->
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                    </tr>
-                    </thead>
-                    <!-- Populate the table with data -->
-                    <tbody>
-                    {% for row in role.children %}
+        {% if role.children.count() > 0 %}
+            <h4>Child Roles</h4>
+            <div class="panel panel-primary">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <!-- Create table header -->
+                        <thead>
                         <tr>
-                            <td class="col-md-4">
-                                <a href="{{ url_for('role_page', role_id=row.id) }}">{{ row.name }}</a>
-                            </td>
-                            <td>{{ row.desc }}</td>
+                            <th>Name</th>
+                            <th>Description</th>
                         </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <!-- Populate the table with data -->
+                        <tbody>
+                        {% for row in role.children %}
+                            <tr>
+                                <td class="col-md-4">
+                                    <a href="{{ url_for('role_page', role_id=row.id) }}">{{ row.name }}</a>
+                                </td>
+                                <td>{{ row.desc }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
+        {% endif %}
     </div>
 {% endblock %}
