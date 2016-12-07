@@ -87,6 +87,7 @@
                             (<a href="{{ url_for('user_page', user_id=row.requested_for_id) }}">{{ row.requested_for.id }}</a>)
                         </div>
                         <div class="feed-card-actions">
+                            <div class="dot status-{{ row.status }}"></div>
                             {{ row.status }}
                         </div>
                     </div>

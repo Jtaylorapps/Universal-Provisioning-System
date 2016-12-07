@@ -24,6 +24,29 @@
 	width: 100%;
 }
 
+.dot-cell {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-items: center;
+}
+
+.flex-label {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.dot {
+	width: 10px;
+	height: 10px;
+	border-radius: 100px;
+	display: inline-block;
+	margin-right: 5px;
+}
+
 .status-PENDING {
 	background-color: #FFF176;
 }

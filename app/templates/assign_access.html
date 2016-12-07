@@ -12,12 +12,12 @@
             <div class="panel-body">
                 <!-- User select field -->
                 <div class="form-group">
-                    <label class="col-md-2 control-label">{{ form.users.label }}</label>
+                    <label class="col-md-2 control-label"><div class="flex-label">{{ form.users.label }}<div style="color:red">&nbsp;*</div></div></label>
                     <div class="col-md-8">{{ form.users(class_="form-control js-dropdown-ajax", required=true) }}</div>
                 </div>
                 <!-- Role select field -->
                 <div class="form-group">
-                    <label class="col-md-2 control-label">{{ form.roles.label }}</label>
+                    <label class="col-md-2 control-label"><div class="flex-label">{{ form.roles.label }}<div style="color:red">&nbsp;*</div></div></label>
                     <div class="col-md-8">{{ form.roles(class_="form-control js-dropdown-ajax", required=true) }}</div>
                 </div>
                 <!-- Comment text area -->
