@@ -170,3 +170,19 @@ textarea {
 .info-tip-new:active {
     color: #101010;
 }
+
+@media(min-width: 766px) {
+    .home-border {
+        height: 25px;
+        width: 1px;
+        border-right: 1px solid #aaa;
+        margin-right: 5px;
+        margin-left: 5px;
+    }
+}
+
+.flex-row-center {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
